@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#080810">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Horeca">
+<title>Synergy Horeca Equipment</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&family=Bangers&family=Amiri:wght@400;700&display=swap');
+:root{
+  --bg:#080810; --bg2:#0F0F1A; --bg3:#161622; --card:#1A1A28; --card2:#20202E;
+  --gold:#F5A623; --gold2:#FFD166; --gold3:rgba(245,166,35,.15); --gold4:rgba(245,166,35,.07);
+  --green:#06D6A0; --green2:rgba(6,214,160,.12); --pista:#B5E48C;
+  --red:#FF4757; --red2:rgba(255,71,87,.12);
+  --blue:#4ECDC4; --blue2:rgba(78,205,196,.1);
+  --purple:#A78BFA; --pur2:rgba(167,139,250,.1);
+  --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
+  --text:#F0F0F5; --text2:#8888A0; --text3:#44445A;
+  --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:var(--bg)}
+body{font-family:'Space Grotesk',sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
+
+/* ═══ SPLASH ═══ */
+#splash{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 30%,#1A1A40 0%,#080810 65%);
+  z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity 1s ease,transform 1s ease}
+#splash.out{opacity:0;transform:scale(1.06);pointer-events:none}
+
+/* Logo grand + pulse or vif */
+.sp-icon{
+  width:130px;height:130px;border-radius:30px;
+  background:linear-gradient(135deg,#C8860A,#F5A623,#FFD166,#F5A623);
+  display:flex;align-items:center;justify-content:center;font-size:64px;
+  animation:spGlow 1.6s ease-in-out infinite;margin-bottom:28px;position:relative;
+}
+.sp-icon::before{
+  content:'';position:absolute;inset:-6px;border-radius:36px;
+  background:linear-gradient(135deg,#F5A623,#FFD166,#F5A623,#C8860A);
+  z-index:-1;animation:spRing 1.6s ease-in-out infinite;opacity:.5;
+}
+@keyframes spGlow{
+  0%{transform:scale(1.0);box-shadow:0 0 40px rgba(245,166,35,.4)}
+  50%{transform:scale(1.12);box-shadow:0 0 120px rgba(255,209,102,.9),0 0 0 4px rgba(245,166,35,.3)}
+  100%{transform:scale(1.0);box-shadow:0 0 40px rgba(245,166,35,.4)}
+}
+@keyframes spRing{
+  0%,100%{opacity:.3;transform:scale(1)}
+  50%{opacity:.7;transform:scale(1.15)}
+}
+.sp-title{
+  font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff;
+  text-align:center;letter-spacing:1px;line-height:1.25;
+  text-shadow:0 0 40px rgba(245,166,35,.3);
+}
+.sp-sub{
+  font-family:'Space Grotesk',sans-serif;font-size:13px;color:rgba(245,166,35,.65);
+  font-weight:500;margin-top:7px;text-align:center;letter-spacing:.5px;font-style:italic;
+}
+.sp-bar-wrap{width:220px;height:3px;background:rgba(255,255,255,.07);border-radius:2px;margin:38px 0 26px;overflow:hidden}
+.sp-bar-fill{height:100%;background:linear-gradient(90deg,#C8860A,#F5A623,#FFD166);border-radius:2px;animation:spLoad 5.6s ease forwards}
+@keyframes spLoad{0%{width:0}100%{width:100%}}
+.sp-bottom{position:absolute;bottom:calc(28px + var(--safe-b));text-align:center}
+.sp-biz{font-family:'Space Grotesk',sans-serif;font-size:15px;color:rgba(255,255,255,.4);letter-spacing:.5px;font-weight:500}
+.sp-more{
+  font-family:'Bangers',cursive;font-size:15px;letter-spacing:5px;font-style:italic;
+  color:var(--pista);display:inline;
+  text-shadow:0 0 20px rgba(181,228,140,.5);
+}
+.sp-amp{font-family:'Space Grotesk',sans-serif;font-size:15px;color:rgba(255,255,255,.4);}
+
+/* ═══ WELCOME ═══ */
+#welcome{position:fixed;inset:0;z-index:8000;display:none;overflow:hidden;background:#000}
+.wc-mosaic{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3px;opacity:0;transition:opacity .8s ease}
+.wc-mosaic.vis{opacity:1}
+.wc-tile{background-size:cover;background-position:center;position:relative;overflow:hidden}
+.wc-tile::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.12)}
+/* Big center tile */
+.wc-tile:nth-child(5){grid-column:2;grid-row:2;z-index:2}
+.wc-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.25) 45%,rgba(0,0,0,.05) 100%)}
+.wc-content{position:absolute;bottom:0;left:0;right:0;padding:28px 24px calc(28px + var(--safe-b));text-align:center}
+.wc-logo{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;opacity:.85}
+.wc-slogan{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;font-style:italic;color:#fff;line-height:1.2;margin-bottom:8px;text-shadow:0 2px 20px rgba(0,0,0,.5)}
+.wc-slogan strong{color:transparent;-webkit-background-clip:text;background-clip:text;background-image:linear-gradient(135deg,#F5A623,#FFD166)}
+.wc-tagline{font-family:'Space Grotesk',sans-serif;font-size:12px;color:rgba(255,255,255,.45);letter-spacing:2px;font-weight:400;margin-bottom:0}
+.wc-bar{position:absolute;bottom:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));animation:wcLoad 4s linear forwards}
+@keyframes wcLoad{from{width:0}to{width:100%}}
+
+/* ═══ MAIN APP ═══ */
+#main{display:none;position:fixed;inset:0;overflow:hidden}
+#main.fadein{animation:mainFadeIn .8s ease forwards}
+@keyframes mainFadeIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+
+/* ═══ LEFT SIDE DRAWER ═══ */
+#drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:700;display:none;backdrop-filter:blur(4px)}
+#drawer-overlay.on{display:block;animation:fadeIn .25s}
+#drawer{position:fixed;top:0;left:-310px;bottom:0;width:290px;background:var(--bg2);z-index:710;
+  border-right:1px solid var(--border2);transition:transform .3s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;overflow:hidden}
+#drawer.open{transform:translateX(310px)}
+.drawer-header{padding:calc(var(--safe-t)+20px) 20px 16px;background:linear-gradient(160deg,#0D0D22,#111128);border-bottom:1px solid var(--border);flex-shrink:0}
+.drawer-brand{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold2);letter-spacing:.5px}
+.drawer-sub{font-size:11px;color:var(--text3);margin-top:4px}
+.drawer-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:10px 0}
+.drawer-item{display:flex;align-items:center;gap:14px;padding:13px 20px;cursor:pointer;transition:all .18s;position:relative}
+.drawer-item:active{background:var(--bg3)}
+.drawer-item.active-item{background:rgba(245,166,35,.07)}
+.drawer-item.active-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold);border-radius:0 2px 2px 0}
+.drawer-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:transform .18s}
+.drawer-item:active .drawer-ico{transform:scale(.92)}
+.drawer-label{font-size:13px;font-weight:600;color:var(--text);flex:1}
+.drawer-label-ar{font-family:'Amiri',serif;font-size:11px;color:var(--text2);display:block;margin-top:1px}
+.drawer-section{padding:14px 20px 6px;font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px}
+.drawer-divider{height:1px;background:var(--border);margin:6px 16px}
+
+/* HOME SCREEN */
+#home-scr{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.home-header{
+  background:linear-gradient(160deg,#0D0D1E,#111128);
+  padding:calc(var(--safe-t)+14px) 16px 14px;
+  position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;
+}
+.ham-btn{width:38px;height:38px;border-radius:11px;background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .18s;flex-direction:column;gap:4px;padding:10px}
+.ham-btn:active{transform:scale(.92)}
+.ham-line{width:18px;height:2px;background:var(--text);border-radius:1px}
+.home-brand-wrap{flex:1;min-width:0}
+.home-brand{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--gold);letter-spacing:.5px}
+.home-sub{font-size:10px;color:var(--text3);margin-top:1px}
+.home-time-wrap{text-align:right;flex-shrink:0}
+.home-time{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#fff}
+.home-date{font-size:9px;color:var(--text3);margin-top:1px}
+
+/* HOME CARDS */
+.home-content{padding:14px}
+.home-section-ttl{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.qtile{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:14px 6px 10px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:all .2s;
+  position:relative;overflow:hidden}
+.qtile:active{transform:scale(.91)}
+.qtile-ico{font-size:24px;line-height:1}
+.qtile-lbl{font-size:9px;font-weight:700;color:var(--text2);text-align:center;line-height:1.3;font-family:'Space Grotesk',sans-serif}
+
+/* KPI HOME */
+.kpi-home{background:linear-gradient(135deg,rgba(245,166,35,.08),rgba(245,166,35,.02));
+  border:1px solid rgba(245,166,35,.15);border-radius:16px;padding:16px;margin-bottom:12px}
+
+/* ALERT STRIP */
+.alert-strip{background:rgba(255,71,87,.07);border:1px solid rgba(255,71,87,.18);border-radius:12px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:flex-start;gap:9px;font-size:11px;color:var(--text2)}
+.alert-strip.warn{background:rgba(245,166,35,.06);border-color:rgba(245,166,35,.18)}
+
+/* ═══ SECTION PANELS ═══ */
+.panel{position:fixed;inset:0;background:var(--bg);z-index:500;display:none;flex-direction:column;overflow:hidden}
+.panel.on{display:flex;animation:panelIn .22s ease}
+@keyframes panelIn{from{opacity:.5;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+.panel-top{height:calc(var(--safe-t) + 54px);background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-end;padding:0 14px 11px;gap:12px;flex-shrink:0}
+.panel-back{width:34px;height:34px;border-radius:10px;background:var(--card2);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:18px;transition:all .18s;flex-shrink:0}
+.panel-back:active{transform:scale(.9)}
+.panel-ttl{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text);flex:1}
+.panel-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+
+/* ═══ SHARED COMPONENTS ═══ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:12px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;border:none;transition:all .18s;white-space:nowrap}
+.btn:active{transform:scale(.94)}
+.btn-gold{background:var(--gold);color:#080810;box-shadow:0 4px 14px rgba(245,166,35,.35)}
+.btn-green{background:var(--green);color:#080810}
+.btn-red{background:var(--red);color:#fff}
+.btn-ghost{background:var(--card2);color:var(--text2);border:1px solid var(--border)}
+.btn-outline{background:transparent;color:var(--text);border:1.5px solid var(--border2)}
+.btn-full{width:100%}
+.btn-sm{padding:6px 12px;font-size:11px;border-radius:9px}
+.btn-lg{padding:14px 20px;font-size:14px;border-radius:14px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:10px;font-weight:700;color:var(--text3);margin-bottom:5px;text-transform:uppercase;letter-spacing:.8px}
+.field input,.field select,.field textarea{width:100%;padding:11px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:11px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .2s;-webkit-appearance:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold)}
+.field textarea{resize:none;min-height:80px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px}
+.card-hd{padding:13px 15px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-bd{padding:13px 15px}
+.card-t{font-size:13px;font-weight:700;color:var(--text)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:600;display:none;align-items:flex-end;backdrop-filter:blur(8px)}
+.overlay.on{display:flex;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.sheet{background:var(--bg2);border-radius:22px 22px 0 0;width:100%;max-height:92vh;overflow-y:auto;
+  padding-bottom:calc(14px + var(--safe-b));animation:sheetUp .24s ease;border-top:1px solid var(--border2)}
+@keyframes sheetUp{from{transform:translateY(50px);opacity:.5}to{transform:translateY(0);opacity:1}}
+.sh-handle{width:34px;height:4px;background:var(--border2);border-radius:2px;margin:11px auto 0}
+.sh-ttl{padding:13px 18px 11px;border-bottom:1px solid var(--border);font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:space-between}
+.sh-x{color:var(--text3);cursor:pointer;font-size:20px;line-height:1;transition:color .15s}
+.sh-x:active{color:var(--red)}
+.sh-body{padding:16px 18px}
+.dialog{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:700;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(10px)}
+.dialog.on{display:flex;animation:fadeIn .2s}
+.dlg{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:26px 20px 20px;width:100%;max-width:300px;animation:popIn .22s ease}
+@keyframes popIn{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+.dlg-ico{font-size:42px;text-align:center;margin-bottom:10px}
+.dlg-t{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text);text-align:center;margin-bottom:7px}
+.dlg-s{font-size:12px;color:var(--text2);text-align:center;line-height:1.6;margin-bottom:20px}
+.dlg-btns{display:flex;gap:9px}
+#toasts{position:fixed;top:calc(var(--safe-t)+64px);left:50%;transform:translateX(-50%);z-index:2000;display:flex;flex-direction:column;gap:7px;pointer-events:none;min-width:190px;max-width:88vw}
+.toast{background:var(--bg2);color:var(--text);border:1px solid var(--border2);padding:10px 16px;border-radius:13px;font-size:12px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.4);text-align:center;animation:toastIn .28s ease;border-left:3px solid var(--gold)}
+.toast.g{border-left-color:var(--green)}.toast.r{border-left-color:var(--red)}
+@keyframes toastIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+
+/* LINK GRID */
+.link-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px}
+.link-item{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:all .18s;text-decoration:none}
+.link-item:active{transform:scale(.94)}
+.link-ico{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.link-lbl{font-size:10px;font-weight:700;color:var(--text2);text-align:center;line-height:1.3}
+
+/* NOTES */
+.note-card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:13px 15px;margin-bottom:9px;cursor:pointer;transition:all .18s;position:relative}
+.note-card:active{transform:scale(.98)}
+.note-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}
+.note-preview{font-size:11px;color:var(--text2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.note-date{font-size:9px;color:var(--text3);margin-top:6px;font-weight:600}
+.note-del{position:absolute;top:10px;right:10px;color:var(--text3);font-size:16px;padding:4px 6px}
+
+/* CALCULATOR */
+.calc-display{background:var(--bg3);border-radius:14px;padding:20px 16px;margin:14px;text-align:right}
+.calc-expr{font-size:13px;color:var(--text2);min-height:18px;font-family:'Space Grotesk',sans-serif}
+.calc-val{font-family:'Space Grotesk',sans-serif;font-size:38px;font-weight:700;color:#fff;word-break:break-all;line-height:1.1}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 14px 14px}
+.calc-btn{background:var(--card2);border:1px solid var(--border);border-radius:13px;padding:18px 8px;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--text);cursor:pointer;transition:all .15s;text-align:center}
+.calc-btn:active{transform:scale(.9)}
+.calc-btn.op{background:rgba(245,166,35,.12);color:var(--gold);border-color:rgba(245,166,35,.2)}
+.calc-btn.eq{background:var(--gold);color:#080810;border-color:var(--gold)}
+.calc-btn.fn{background:var(--card);color:var(--text2)}
+.calc-btn.span2{grid-column:span 2}
+
+/* CATALOGUE BOOK */
+#cat-book{position:fixed;inset:0;background:#000;z-index:550;display:none;flex-direction:column}
+.cat-book-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;background-size:cover;background-position:center;transition:opacity .4s}
+.cat-book-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.2) 50%,transparent 100%)}
+.cat-book-info{position:relative;z-index:2;padding:24px;width:100%;text-align:left}
+.cat-book-code{display:inline-block;background:rgba(245,166,35,.2);color:var(--gold);border:1px solid rgba(245,166,35,.3);border-radius:7px;padding:3px 10px;font-size:10px;font-weight:700;margin-bottom:10px}
+.cat-book-name{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.2}
+.cat-book-meta{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:14px}
+.cat-book-price{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;color:var(--gold)}
+.cat-book-nav{display:flex;justify-content:space-between;position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);padding:0 10px;pointer-events:none;z-index:3}
+.cat-nav-btn{width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;cursor:pointer;pointer-events:all;transition:all .18s;backdrop-filter:blur(4px)}
+.cat-nav-btn:active{transform:scale(.88)}
+.cat-counter{position:absolute;top:calc(var(--safe-t)+14px);right:14px;background:rgba(0,0,0,.5);color:#fff;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;backdrop-filter:blur(4px)}
+.cat-close{position:absolute;top:calc(var(--safe-t)+12px);left:14px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;cursor:pointer;backdrop-filter:blur(4px)}
+.cat-dots-row{position:absolute;bottom:calc(var(--safe-b)+16px);left:50%;transform:translateX(-50%);display:flex;gap:5px}
+.cat-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .3s}
+.cat-dot.on{background:var(--gold);width:16px;border-radius:3px}
+
+/* PRAYER (تعبّد) */
+.prayer-header{background:linear-gradient(135deg,#0D1B2A,#1B2A3E);padding:20px 18px;text-align:center;border-bottom:1px solid var(--border)}
+.prayer-time-main{font-family:'Space Grotesk',sans-serif;font-size:48px;font-weight:800;color:var(--gold);text-align:center}
+.prayer-label{font-size:14px;color:rgba(255,255,255,.5);text-align:center;margin-top:4px}
+.prayer-row{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid var(--border)}
+.prayer-name{font-size:14px;font-weight:600;color:var(--text)}
+.prayer-name-ar{font-family:'Amiri',serif;font-size:16px;color:var(--text2)}
+.prayer-t{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--gold)}
+
+/* RADIO */
+.radio-vis{background:linear-gradient(135deg,#0D1220,#152030);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.radio-ring{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,rgba(6,214,160,.1),rgba(78,205,196,.05));border:2px solid rgba(6,214,160,.2);display:flex;align-items:center;justify-content:center;animation:radioSpin 8s linear infinite}
+@keyframes radioSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.radio-inner{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#0D1220,#152030);display:flex;align-items:center;justify-content:center;animation:radioSpin 8s linear reverse infinite;font-size:32px}
+.radio-waves{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.radio-wave{position:absolute;border-radius:50%;border:1px solid rgba(6,214,160,.2);animation:waveOut 2s ease infinite}
+.radio-wave:nth-child(2){animation-delay:.5s}.radio-wave:nth-child(3){animation-delay:1s}
+@keyframes waveOut{from{width:120px;height:120px;opacity:.6}to{width:260px;height:260px;opacity:0}}
+
+/* DEVIS/FACTURE */
+.doc-line{padding:11px 15px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:7px}
+.doc-line input{background:var(--bg3);border:1.5px solid var(--border);border-radius:9px;padding:8px 11px;font-size:12px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.doc-line input:focus{border-color:var(--gold)}
+.doc-nums{display:flex;gap:7px;align-items:center}
+.num-inp{width:58px;background:var(--bg3);border:1.5px solid var(--border);border-radius:9px;padding:8px 9px;font-size:12px;color:var(--text);font-family:'Inter',sans-serif;outline:none}
+.num-inp:focus{border-color:var(--gold)}
+.line-total{background:var(--card);border-radius:9px;padding:8px 12px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--gold);white-space:nowrap;flex-shrink:0}
+.share-row{display:flex;gap:7px;padding:12px 15px;background:var(--bg3);border-top:1px solid var(--border);flex-wrap:wrap}
+.share-btn{flex:1;min-width:65px;padding:9px 6px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;border:none;transition:all .18s;text-align:center}
+.share-btn:active{transform:scale(.92)}
+
+/* GESTION */
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px;cursor:pointer;transition:all .18s}
+.kpi:active{transform:scale(.97)}
+.kpi-v{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:700}
+.kpi-l{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+.kpi.wide{grid-column:1/-1;background:var(--gold4);border-color:rgba(245,166,35,.2)}
+.kpi.wide .kpi-v{font-size:27px;color:var(--gold2)}
+.vcard{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:13px;padding:13px 14px;margin-bottom:9px;display:flex;justify-content:space-between;align-items:flex-start}
+.scard{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:13px 14px;margin-bottom:9px}
+.sc-code{display:inline-block;background:var(--gold3);color:var(--gold);border:1px solid rgba(245,166,35,.2);border-radius:6px;padding:2px 8px;font-size:9px;font-weight:700;margin-bottom:6px}
+.sc-name{font-size:13px;font-weight:700;color:var(--text)}
+.sc-row{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.sc-price{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--gold)}
+.bdg{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:9px;font-weight:700}
+.b-pret{background:var(--green2);color:var(--green)}.b-urg{background:rgba(245,166,35,.12);color:var(--gold2)}.b-pri{background:var(--blue2);color:var(--blue)}.b-enc{background:rgba(255,255,255,.06);color:var(--text2)}.b-per{background:var(--red2);color:var(--red)}
+.prog-bar{height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden;margin:7px 0 4px}
+.prog-fill{height:100%;border-radius:2px}
+
+/* REPERTOIRE */
+.contact-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+.contact-row:active{background:var(--card2)}
+.contact-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;flex-shrink:0;color:#080810}
+.contact-info{flex:1;min-width:0}
+.contact-name{font-size:13px;font-weight:700;color:var(--text)}
+.contact-tel{font-size:11px;color:var(--text2);margin-top:2px}
+</style>
+</head>
+<body>
+
+<!-- ═══ SPLASH ═══ -->
+<div id="splash">
+  <div class="sp-icon">🍽️</div>
+  <div class="sp-title">Synergy Horeca Equipment</div>
+  <div class="sp-sub">Equipements Horeca occasion Tunisie</div>
+  <div class="sp-bar-wrap"><div class="sp-bar-fill"></div></div>
+  <div class="sp-bottom">
+    <div class="sp-biz">Business Management App <span class="sp-amp">&</span> <span class="sp-more">More</span></div>
+  </div>
+</div>
+
+<!-- ═══ WELCOME MOSAÏQUE ═══ -->
+<div id="welcome">
+  <div class="wc-mosaic" id="wc-mosaic"></div>
+  <div class="wc-overlay"></div>
+  <div class="wc-content">
+    <div class="wc-logo">⚡ SYNERGY HORECA EQUIPMENT</div>
+    <div class="wc-slogan"><em>Le Meilleur Choix,</em><br><strong>Le Meilleur Prix</strong></div>
+    <div class="wc-tagline">Contrôlé · Révisé · Garanti · Radès · Grand Tunis</div>
+  </div>
+  <div class="wc-bar" id="wc-bar"></div>
+</div>
+
+<span id="hh-next-prayer-val" style="display:none"></span>
+
+<!-- ═══ DRAWER OVERLAY ═══ -->
+<div id="drawer-overlay" onclick="closeDrawer()"></div>
+
+<!-- ═══ LEFT DRAWER MENU ═══ -->
+<div id="drawer">
+  <div class="drawer-header">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#C8860A,#F5A623);display:flex;align-items:center;justify-content:center;font-size:20px">⚡</div>
+      <div>
+        <div class="drawer-brand">Synergy Horeca</div>
+        <div class="drawer-sub">Radès · Grand Tunis</div>
+      </div>
+    </div>
+    <div id="drawer-prayer-next" style="background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.15);border-radius:10px;padding:7px 12px;font-size:11px;color:var(--text2)">—</div>
+  </div>
+  <div class="drawer-scroll" id="drawer-menu"></div>
+</div>
+
+<!-- ═══ MAIN ═══ -->
+<div id="main">
+
+<!-- HOME SCREEN -->
+<div id="home-scr">
+  <div class="home-header">
+    <div class="ham-btn" onclick="openDrawer()">
+      <div class="ham-line"></div><div class="ham-line"></div><div class="ham-line"></div>
+    </div>
+    <div class="home-brand-wrap">
+      <div class="home-brand">⚡ Synergy Horeca</div>
+      <div class="home-sub">Equipements Horeca occasion · Radès</div>
+    </div>
+    <div class="home-time-wrap">
+      <div class="home-time" id="hh-time">--:--</div>
+      <div class="home-date" id="hh-date">—</div>
+    </div>
+  </div>
+  <div class="home-content" id="home-content"></div>
+</div>
+
+<!-- ═══ 17 PANELS ═══ -->
+
+<!-- 1. تعبّد PRIÈRES -->
+<div class="panel" id="p-1">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">تعبّد — Prières & Coran</div>
+  </div>
+  <div class="panel-body">
+    <div class="prayer-header">
+      <div style="font-family:'Amiri',serif;font-size:20px;color:rgba(255,255,255,.5);margin-bottom:4px">بسم الله الرحمن الرحيم</div>
+      <div class="prayer-time-main" id="pr-next-time">--:--</div>
+      <div class="prayer-label" id="pr-next-label">Prochaine : —</div>
+    </div>
+    <div id="prayer-list"></div>
+    <div style="padding:14px;display:flex;flex-direction:column;gap:9px">
+      <a href="https://quran.com" target="_blank" class="btn btn-outline btn-full btn-lg">📖 Lire le Saint Coran — quran.com</a>
+      <a href="https://www.islamway.net" target="_blank" class="btn btn-ghost btn-full">🎧 Écouter le Coran — islamway.net</a>
+      <a href="https://www.seekersguidance.org" target="_blank" class="btn btn-ghost btn-full">📚 Cours islamiques</a>
+    </div>
+    <div style="text-align:center;padding:20px;font-family:'Amiri',serif;font-size:18px;color:rgba(245,166,35,.6);direction:rtl">
+      اللهم اجعلنا من المتقين وارزقنا الرزق الحلال الواسع
+    </div>
+  </div>
+</div>
+
+<!-- 2. NOTES -->
+<div class="panel" id="p-2">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">📝 Notes Rapides</div>
+    <button class="btn btn-gold btn-sm" onclick="openNewNote()">+ Note</button>
+  </div>
+  <div class="panel-body" style="padding:12px" id="notes-list"></div>
+</div>
+
+<!-- 3. PHOTO-VIDEO -->
+<div class="panel" id="p-3">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">📷 Photo & Vidéo</div>
+  </div>
+  <div class="panel-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px">
+      <label for="cam-input" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all .18s">
+        <div style="font-size:36px">📸</div>
+        <div style="font-size:12px;font-weight:700;color:var(--text)">Prendre Photo</div>
+        <div style="font-size:10px;color:var(--text3);text-align:center">Caméra téléphone</div>
+      </label>
+      <input type="file" id="cam-input" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this)">
+      <label for="gal-input" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all .18s">
+        <div style="font-size:36px">🖼️</div>
+        <div style="font-size:12px;font-weight:700;color:var(--text)">Galerie</div>
+        <div style="font-size:10px;color:var(--text3);text-align:center">Vos photos</div>
+      </label>
+      <input type="file" id="gal-input" accept="image/*,video/*" multiple style="display:none" onchange="handleGallery(this)">
+    </div>
+    <div style="padding:0 16px 14px">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;margin-bottom:10px">Photos Sauvegardées</div>
+      <div id="photo-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
+      <div id="photo-empty" style="text-align:center;padding:30px;color:var(--text3);font-size:12px">Aucune photo sauvegardée</div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. MESSAGERIE -->
+<div class="panel" id="p-4">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">💬 Messagerie</div>
+  </div>
+  <div class="panel-body">
+    <div style="padding:14px;background:linear-gradient(135deg,rgba(37,211,102,.08),rgba(37,211,102,.02));border-bottom:1px solid var(--border)">
+      <div style="font-size:11px;color:var(--text2);margin-bottom:10px;font-weight:600">PRINCIPAL</div>
+      <a href="https://wa.me/" target="_blank" style="background:#25D366;border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;text-decoration:none;margin-bottom:0">
+        <div style="width:48px;height:48px;background:rgba(0,0,0,.2);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:26px">📱</div>
+        <div><div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#fff">WhatsApp</div><div style="font-size:11px;color:rgba(255,255,255,.65);margin-top:2px">+216 20 910 909 · Messagerie principale</div></div>
+        <div style="color:rgba(255,255,255,.5);font-size:20px;margin-left:auto">→</div>
+      </a>
+    </div>
+    <div style="padding:14px">
+      <div style="font-size:11px;color:var(--text2);margin-bottom:10px;font-weight:600">RÉSEAUX SOCIAUX</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${[['https://m.me','📘','Messenger Facebook','Vos messages Facebook','#1877F2'],['https://www.instagram.com/direct/inbox/','📸','Instagram Direct','Messages Instagram','#E1306C'],['https://www.tiktok.com/messages','🎵','TikTok Messages','Messages TikTok','#010101'],['https://business.facebook.com/inbox','🏢','Meta Business Suite','FB + IG centralisés — GRATUIT','#0082FB']].map(([u,i,n,s,c])=>`<a href="${u}" target="_blank" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;display:flex;align-items:center;gap:12px;text-decoration:none"><div style="width:40px;height:40px;background:${c}22;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px">${i}</div><div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--text)">${n}</div><div style="font-size:11px;color:var(--text2);margin-top:2px">${s}</div></div><span style="color:var(--text3);font-size:16px">→</span></a>`).join('')}
+      </div>
+    </div>
+    <div style="padding:0 14px 14px">
+      <div style="background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.15);border-radius:12px;padding:13px">
+        <div style="font-size:11px;font-weight:700;color:var(--gold2);margin-bottom:6px">💡 Stratégie messagerie unifiée</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.7">WhatsApp Business = centre principal · Meta Suite = FB + IG · TikTok → bio avec lien WhatsApp · ManyChat = réponse auto 24h/24</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. RECHERCHE MARKETPLACE -->
+<div class="panel" id="p-5">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">🔍 Marketplace Facebook</div>
+  </div>
+  <div class="panel-body" style="padding:16px">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px">
+      <a href="https://www.facebook.com/marketplace" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px;text-decoration:none">
+        <div style="width:50px;height:50px;background:#1877F222;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:28px">🏪</div>
+        <div><div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text)">Facebook Marketplace</div><div style="font-size:11px;color:var(--text2);margin-top:3px">Recherche en Tunisie · Équipements CHR</div></div>
+        <div style="color:var(--gold);font-size:20px;margin-left:auto">→</div>
+      </a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px">
+      ${[['https://www.facebook.com/marketplace/category/appliances','🔌','Électroménager','Appareils & équipements'],['https://www.facebook.com/marketplace/tunis','📍','Tunis Marketplace','Annonces locales Tunis'],['https://www.jumia.com.tn','🛒','Jumia Tunisie','E-commerce Tunisie'],['https://www.tayara.tn','📱','Tayara.tn','Petites annonces Tunisie']].map(([u,i,n,s])=>`<a href="${u}" target="_blank" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;display:flex;align-items:center;gap:12px;text-decoration:none"><div style="font-size:22px;width:36px;text-align:center">${i}</div><div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--text)">${n}</div><div style="font-size:11px;color:var(--text2)">${s}</div></div><span style="color:var(--text3)">→</span></a>`).join('')}
+    </div>
+  </div>
+</div>
+
+<!-- 6. PUBLIER ARTICLE -->
+<div class="panel" id="p-6">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">📢 Publier un Article</div>
+  </div>
+  <div class="panel-body" style="padding:16px">
+    <div style="background:linear-gradient(135deg,rgba(24,119,242,.1),rgba(24,119,242,.04));border:1px solid rgba(24,119,242,.2);border-radius:14px;padding:16px;margin-bottom:14px">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#4A90D9;margin-bottom:8px">Publication directe Facebook</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:12px">Publiez vos articles directement sur votre page Facebook, votre profil ou vos groupes de vente.</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <a href="https://www.facebook.com/marketplace/create" target="_blank" class="btn btn-full" style="background:#1877F2;color:#fff;font-weight:700;border-radius:11px;padding:13px;text-decoration:none;justify-content:center;display:flex;gap:6px">🏪 Publier sur Marketplace</a>
+        <a href="https://www.facebook.com/" target="_blank" class="btn btn-full btn-ghost">📝 Créer une publication</a>
+        <a href="https://www.instagram.com/" target="_blank" class="btn btn-full btn-ghost">📸 Publier sur Instagram</a>
+        <a href="https://www.tiktok.com/upload" target="_blank" class="btn btn-full btn-ghost">🎵 Publier sur TikTok</a>
+      </div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px">
+      <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">Modèles d'annonces</div>
+      <div style="display:flex;flex-direction:column;gap:6px" id="templates-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 7. GESTION -->
+<div class="panel" id="p-7">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">📊 Gestion & Finance</div>
+    <button class="btn btn-gold btn-sm" onclick="openAddStockSheet()">+ Article</button>
+  </div>
+  <div class="panel-body">
+    <div class="kpi-row" id="gest-kpis"></div>
+    <div style="display:flex;background:var(--bg2);border-bottom:1px solid var(--border)">
+      <div id="gt-stock" onclick="gTab('stock')" style="flex:1;padding:11px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;color:var(--gold);border-bottom:2px solid var(--gold)">Stock</div>
+      <div id="gt-ventes" onclick="gTab('ventes')" style="flex:1;padding:11px;text-align:center;font-size:12px;font-weight:600;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent">Ventes</div>
+      <div id="gt-finance" onclick="gTab('finance')" style="flex:1;padding:11px;text-align:center;font-size:12px;font-weight:600;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent">Finance</div>
+    </div>
+    <div id="gest-content" style="padding:12px 14px 80px"></div>
+  </div>
+</div>
+
+<!-- 8. CATALOGUE BOOK -->
+<div id="cat-book">
+  <div id="cat-slides"></div>
+  <div class="cat-book-nav">
+    <div class="cat-nav-btn" onclick="catNav(-1)">‹</div>
+    <div class="cat-nav-btn" onclick="catNav(1)">›</div>
+  </div>
+  <div class="cat-counter" id="cat-counter">1 / 1</div>
+  <div class="cat-close" onclick="closeCatalogue()">✕</div>
+  <div class="cat-dots-row" id="cat-dots-row"></div>
+</div>
+
+<!-- 9. DEVIS & FACTURES -->
+<div class="panel" id="p-9">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">📄 Devis & Factures</div>
+    <div style="display:flex;gap:7px">
+      <button class="btn btn-ghost btn-sm" onclick="openNewDoc('devis')">Devis</button>
+      <button class="btn btn-gold btn-sm" onclick="openNewDoc('facture')">Facture</button>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div style="display:flex;background:var(--bg2);border-bottom:1px solid var(--border)">
+      <div id="dta-devis" onclick="docTab('devis')" style="flex:1;padding:11px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;color:var(--gold);border-bottom:2px solid var(--gold)">📄 Devis</div>
+      <div id="dta-facture" onclick="docTab('facture')" style="flex:1;padding:11px;text-align:center;font-size:12px;font-weight:600;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent">🧾 Factures</div>
+    </div>
+    <div style="padding:12px 14px 80px" id="doc-list"></div>
+  </div>
+</div>
+
+<!-- 10. GOOGLE LENS -->
+<div class="panel" id="p-10">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">🔍 Google Lens</div>
+  </div>
+  <div class="panel-body" style="padding:16px">
+    <div style="background:linear-gradient(135deg,var(--bg3),var(--card));border-radius:16px;padding:24px;text-align:center;margin-bottom:14px;border:1px solid var(--border)">
+      <div style="font-size:52px;margin-bottom:14px">🔍</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px">Google Lens</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:18px">Identifiez des équipements, lisez des textes, trouvez des prix et plus encore grâce à la reconnaissance d'images.</div>
+      <a href="https://lens.google.com" target="_blank" class="btn btn-gold btn-full btn-lg">Ouvrir Google Lens</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <a href="https://images.google.com" target="_blank" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;text-decoration:none"><span style="font-size:22px">🖼️</span><div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--text)">Google Images</div><div style="font-size:11px;color:var(--text2)">Recherche inversée d'images</div></div><span style="color:var(--text3)">→</span></a>
+      <a href="https://www.google.com/imghp" target="_blank" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;text-decoration:none"><span style="font-size:22px">🌐</span><div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--text)">Google Recherche</div><div style="font-size:11px;color:var(--text2)">Recherche visuelle</div></div><span style="color:var(--text3)">→</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- 11. OUTILS GRATUITS -->
+<div class="panel" id="p-11">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">🛠️ Outils Gratuits</div>
+  </div>
+  <div class="panel-body">
+    <div class="link-grid" id="tools-grid"></div>
+  </div>
+</div>
+
+<!-- 12. MAPS -->
+<div class="panel" id="p-12">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">🗺️ Carte & Navigation</div>
+  </div>
+  <div class="panel-body" style="padding:16px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <a href="https://maps.google.com" target="_blank" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;text-decoration:none">
+        <div style="width:50px;height:50px;background:rgba(66,133,244,.15);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:28px">🗺️</div>
+        <div><div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text)">Google Maps</div><div style="font-size:11px;color:var(--text2);margin-top:2px">Navigation & localisation</div></div>
+        <div style="color:var(--gold);font-size:22px;margin-left:auto">→</div>
+      </a>
+      <a href="https://maps.google.com/maps?q=Synergy+Horeca+Equipment+Radès+Tunisie" target="_blank" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;text-decoration:none">
+        <div style="width:50px;height:50px;background:var(--gold3);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:28px">📍</div>
+        <div><div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text)">Notre Dépôt</div><div style="font-size:11px;color:var(--text2);margin-top:2px">Rue Monji Slim · Radès Plage · Grand Tunis</div></div>
+        <div style="color:var(--gold);font-size:22px;margin-left:auto">→</div>
+      </a>
+      <a href="https://www.waze.com" target="_blank" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;text-decoration:none">
+        <div style="width:50px;height:50px;background:rgba(78,205,196,.1);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:28px">🚗</div>
+        <div><div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text)">Waze</div><div style="font-size:11px;color:var(--text2);margin-top:2px">Navigation temps réel</div></div>
+        <div style="color:var(--gold);font-size:22px;margin-left:auto">→</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- 13. CALCULATRICE -->
+<div class="panel" id="p-13">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">🧮 Calculatrice</div>
+  </div>
+  <div class="panel-body">
+    <div class="calc-display">
+      <div class="calc-expr" id="calc-expr"></div>
+      <div class="calc-val" id="calc-val">0</div>
+    </div>
+    <div class="calc-grid">
+      <div class="calc-btn fn" onclick="calcAction('C')">C</div>
+      <div class="calc-btn fn" onclick="calcAction('+/-')">+/-</div>
+      <div class="calc-btn fn" onclick="calcAction('%')">%</div>
+      <div class="calc-btn op" onclick="calcAction('/')">÷</div>
+      <div class="calc-btn" onclick="calcAction('7')">7</div>
+      <div class="calc-btn" onclick="calcAction('8')">8</div>
+      <div class="calc-btn" onclick="calcAction('9')">9</div>
+      <div class="calc-btn op" onclick="calcAction('*')">×</div>
+      <div class="calc-btn" onclick="calcAction('4')">4</div>
+      <div class="calc-btn" onclick="calcAction('5')">5</div>
+      <div class="calc-btn" onclick="calcAction('6')">6</div>
+      <div class="calc-btn op" onclick="calcAction('-')">−</div>
+      <div class="calc-btn" onclick="calcAction('1')">1</div>
+      <div class="calc-btn" onclick="calcAction('2')">2</div>
+      <div class="calc-btn" onclick="calcAction('3')">3</div>
+      <div class="calc-btn op" onclick="calcAction('+')">+</div>
+      <div class="calc-btn span2" onclick="calcAction('0')">0</div>
+      <div class="calc-btn" onclick="calcAction('.')">.</div>
+      <div class="calc-btn eq" onclick="calcAction('=')">=</div>
+    </div>
+    <div style="padding:0 14px 14px">
+      <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Calcul Marge Rapide</div>
+      <div style="display:flex;gap:9px">
+        <div class="field" style="margin-bottom:0;flex:1"><label>Coût (DT)</label><input type="number" id="mg-cout" placeholder="0" oninput="calcMarge()"></div>
+        <div class="field" style="margin-bottom:0;flex:1"><label>Prix Vente (DT)</label><input type="number" id="mg-prix" placeholder="0" oninput="calcMarge()"></div>
+      </div>
+      <div id="mg-result" style="margin-top:10px;background:var(--bg3);border-radius:10px;padding:10px;display:none">
+        <div id="mg-val" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700"></div>
+        <div id="mg-pct" style="font-size:11px;color:var(--text2);margin-top:2px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RADAR SYNERGY PANEL ═══ -->
+<div class="panel" id="p-radar">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">📡 Radar Synergy</div>
+    <div style="font-size:11px;color:var(--green);font-weight:700;animation:radarPing 2s infinite">● En veille</div>
+  </div>
+  <div class="panel-body" style="padding:14px" id="radar-content"></div>
+</div>
+
+<!-- 14. ACTUALITÉS HORECA -->
+<div class="panel" id="p-14">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">📰 Actualités Horeca</div>
+  </div>
+  <div class="panel-body">
+    <div class="link-grid" id="news-grid"></div>
+    <div style="padding:0 14px 14px">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:13px;padding:14px">
+        <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Recherches rapides</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px">
+          ${['#CHR','#Horeca','#Restauration','#TunisieFood','#HorecaTunisie','#EquipementCHR','#FoodService','#Boulangerie'].map(t=>`<a href="https://www.facebook.com/hashtag/${t.slice(1)}" target="_blank" style="background:var(--bg3);color:var(--gold);border:1px solid rgba(245,166,35,.2);border-radius:20px;padding:5px 12px;font-size:11px;font-weight:600;text-decoration:none">${t}</a>`).join('')}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 15. RADIO ZITOUNA -->
+<div class="panel" id="p-15">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">📻 Radio Zitouna FM</div>
+  </div>
+  <div class="panel-body">
+    <div class="radio-vis">
+      <div class="radio-waves">
+        <div class="radio-wave"></div>
+        <div class="radio-wave"></div>
+        <div class="radio-wave"></div>
+      </div>
+      <div class="radio-ring">
+        <div class="radio-inner" id="radio-play-ico">🕌</div>
+      </div>
+    </div>
+    <div style="padding:20px;text-align:center">
+      <div style="font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin-bottom:4px">راديو الزيتونة</div>
+      <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Radio Zitouna FM · Tunisie</div>
+      <div style="font-size:11px;color:var(--text2)">Radio islamique en direct 24h/24</div>
+    </div>
+    <audio id="radio-audio" preload="none">
+      <source src="https://str01.fluidstream.net/zitouna.mp3" type="audio/mpeg">
+    </audio>
+    <div style="padding:0 20px 14px;display:flex;flex-direction:column;gap:10px">
+      <button class="btn btn-green btn-full btn-lg" id="radio-play-btn" onclick="toggleRadio()">▶ Écouter en Direct</button>
+      <a href="https://www.radiozitouna.tn" target="_blank" class="btn btn-ghost btn-full">🌐 Site officiel Zitouna</a>
+      <a href="https://www.radiosparadisefm.com/radio/zitouna-fm" target="_blank" class="btn btn-ghost btn-full">📻 Alternative stream</a>
+    </div>
+    <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:8px" id="other-radios"></div>
+  </div>
+</div>
+
+<!-- 16. RÉPERTOIRE -->
+<div class="panel" id="p-16">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">📞 Répertoire</div>
+    <button class="btn btn-gold btn-sm" onclick="openAddContact()">+ Contact</button>
+  </div>
+  <div class="panel-body">
+    <div style="display:flex;background:var(--bg2);border-bottom:1px solid var(--border)">
+      <div id="rta-contacts" onclick="repTab('contacts')" style="flex:1;padding:11px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;color:var(--gold);border-bottom:2px solid var(--gold)">📞 Contacts</div>
+      <div id="rta-clients" onclick="repTab('clients')" style="flex:1;padding:11px;text-align:center;font-size:12px;font-weight:600;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent">👥 Clients</div>
+    </div>
+    <div id="rep-content" style="padding-bottom:20px"></div>
+  </div>
+</div>
+
+<!-- 17. CONFIGURATION -->
+<div class="panel" id="p-17">
+  <div class="panel-top">
+    <div class="panel-back" onclick="closePanel()">←</div>
+    <div class="panel-ttl">⚙️ Configuration Générale</div>
+  </div>
+  <div class="panel-body" style="padding:14px 14px 80px" id="config-body"></div>
+</div>
+
+</div><!-- /#main -->
+
+<!-- ═══ OVERLAYS / SHEETS ═══ -->
+
+<!-- SHEET: NOTE EDIT -->
+<div class="overlay" id="sh-note">
+  <div class="sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-ttl"><span id="sh-note-ttl">Nouvelle Note</span><span class="sh-x" onclick="closeOverlays()">✕</span></div>
+    <div class="sh-body">
+      <div class="field"><label>Titre</label><input id="note-title-inp" placeholder="Titre de la note..."></div>
+      <div class="field"><label>Contenu</label><textarea id="note-body-inp" rows="6" placeholder="Écrivez votre note ici..."></textarea></div>
+      <button class="btn btn-gold btn-full btn-lg" onclick="saveNote()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHEET: STOCK ADD/EDIT -->
+<div class="overlay" id="sh-stock">
+  <div class="sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-ttl"><span id="sh-st-ttl">Nouvel Article</span><span class="sh-x" onclick="closeOverlays()">✕</span></div>
+    <div class="sh-body">
+      <input type="hidden" id="sf-id">
+      <div class="field"><label>Article *</label><input id="sf-art" placeholder="Description complète"></div>
+      <div class="g2">
+        <div class="field"><label>Catégorie</label><select id="sf-cat"><option>Réfrig. vertical vitré</option><option>Vitrine réfrig.</option><option>Vitrine glace</option><option>Congélateur horiz vitré</option><option>Congélateur vertical vitré</option><option>Four pizza</option><option>Four pâtisserie</option><option>Machine café</option><option>Comptoir sandwich</option><option>Pétrin</option><option>Friteuse</option><option>Grillade</option><option>Mobilier</option><option>Accessoires</option><option>Divers</option></select></div>
+        <div class="field"><label>Statut</label><select id="sf-st"><option>✅ PRÊT</option><option>⭐ URGENT</option><option>🔵 Prioritaire</option><option>En cours</option><option>⚠ PERTE</option></select></div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Coût (DT)</label><input id="sf-cout" type="number" placeholder="0"></div>
+        <div class="field"><label>Prix (DT)</label><input id="sf-prix" type="number" placeholder="0"></div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Date Entrée</label><input id="sf-de" type="date"></div>
+        <div class="field"><label>Avancement %</label><input id="sf-av" type="number" min="0" max="100" placeholder="80"></div>
+      </div>
+      <div class="field"><label>Provenance</label><input id="sf-prov" placeholder="Ville / Origine"></div>
+      <div class="field"><label>Travaux</label><textarea id="sf-trav" rows="2" placeholder="Travaux restants..."></textarea></div>
+      <button class="btn btn-gold btn-full btn-lg" onclick="saveStockItem()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHEET: VENTE -->
+<div class="overlay" id="sh-vente">
+  <div class="sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-ttl"><span>Enregistrer une Vente</span><span class="sh-x" onclick="closeOverlays()">✕</span></div>
+    <div class="sh-body">
+      <div class="field"><label>Article</label><select id="vf-sel" onchange="fillVente()"><option value="">— Depuis stock —</option></select><input id="vf-art" placeholder="Ou saisir manuellement" style="margin-top:7px"></div>
+      <div class="g2">
+        <div class="field"><label>Coût (DT)</label><input id="vf-cout" type="number" oninput="prvVMarge()"></div>
+        <div class="field"><label>Prix Vendu (DT)</label><input id="vf-vendu" type="number" oninput="prvVMarge()"></div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Type</label><select id="vf-typ"><option value="C">CHR</option><option value="L">Liquidation</option></select></div>
+        <div class="field"><label>Date</label><input id="vf-dv" type="date"></div>
+      </div>
+      <div class="field"><label>Acheteur</label><input id="vf-prov" placeholder="Nom · Ville"></div>
+      <div id="vf-mprev" style="display:none;background:var(--bg3);border-radius:10px;padding:11px;margin-bottom:12px">
+        <div style="font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;margin-bottom:3px">Marge</div>
+        <div id="vf-mval" style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700"></div>
+      </div>
+      <button class="btn btn-green btn-full btn-lg" onclick="saveVenteItem()">Confirmer la Vente</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHEET: CONTACT ADD -->
+<div class="overlay" id="sh-contact">
+  <div class="sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-ttl"><span id="sh-ct-ttl">Nouveau Contact</span><span class="sh-x" onclick="closeOverlays()">✕</span></div>
+    <div class="sh-body">
+      <input type="hidden" id="ctf-id">
+      <div class="g2">
+        <div class="field"><label>Nom *</label><input id="ctf-nom" placeholder="Nom complet"></div>
+        <div class="field"><label>Téléphone *</label><input id="ctf-tel" type="tel" placeholder="+216..."></div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Type</label><select id="ctf-type"><option value="contact">Contact</option><option value="client">Client</option><option value="fournisseur">Fournisseur</option></select></div>
+        <div class="field"><label>Ville</label><input id="ctf-zone" placeholder="Tunis, Radès..."></div>
+      </div>
+      <div class="field"><label>Note</label><input id="ctf-note" placeholder="Infos..."></div>
+      <button class="btn btn-gold btn-full btn-lg" onclick="saveContact()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: DOC FORM -->
+<div style="position:fixed;inset:0;background:var(--bg);z-index:550;display:none;flex-direction:column;overflow:hidden" id="m-doc">
+  <div style="height:calc(var(--safe-t)+54px);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:flex-end;padding:0 14px 11px;gap:12px;flex-shrink:0">
+    <div onclick="closeDoc()" style="color:var(--text2);font-size:22px;cursor:pointer;line-height:1;width:34px;height:34px;background:var(--card2);border:1px solid var(--border2);border-radius:10px;display:flex;align-items:center;justify-content:center">←</div>
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text);flex:1" id="m-doc-ttl">Nouveau Devis</div>
+    <button class="btn btn-ghost btn-sm" onclick="printDoc()">🖨️</button>
+    <button class="btn btn-gold btn-sm" onclick="saveDoc()">Sauver</button>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:14px">
+    <input type="hidden" id="dc-type"><input type="hidden" id="dc-id">
+    <div class="card" style="margin-bottom:12px">
+      <div class="card-hd"><span class="card-t">Client</span><button class="btn btn-ghost btn-sm" onclick="pickDocClient()">Choisir</button></div>
+      <div class="card-bd">
+        <div class="g2"><div class="field" style="margin-bottom:0"><label>Nom</label><input id="dc-cnom" placeholder="Nom client"></div><div class="field" style="margin-bottom:0"><label>Téléphone</label><input id="dc-ctel" placeholder="+216..."></div></div>
+        <div class="field" style="margin-top:10px;margin-bottom:0"><label>Adresse</label><input id="dc-cadr" placeholder="Adresse"></div>
+        <div id="dc-status-wrap" style="display:none;margin-top:10px"><div class="field" style="margin-bottom:0"><label>Paiement</label><select id="dc-status"><option value="pending">⏳ En attente</option><option value="partial">⚡ Partiel</option><option value="paid">✅ Payé</option></select></div></div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:12px">
+      <div class="card-hd"><span class="card-t">Articles</span><button class="btn btn-gold btn-sm" onclick="addDocLine()">+ Ligne</button></div>
+      <div id="dc-lines"></div>
+      <div style="padding:12px 15px;display:flex;justify-content:space-between;align-items:center;background:var(--bg3);border-top:1px solid var(--border)">
+        <span style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase">TOTAL</span>
+        <span id="dc-total" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--gold)">0 DT</span>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:12px">
+      <div class="card-bd">
+        <div class="field"><label>Notes</label><textarea id="dc-notes" rows="2" placeholder="Conditions..."></textarea></div>
+        <div class="field" style="margin-bottom:0"><label>Validité</label><input id="dc-valid" type="date"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-hd"><span class="card-t">📤 Partager</span></div>
+      <div class="share-row">
+        <button class="share-btn" style="background:#25D366;color:#080810" onclick="shareDoc('wa')">📱 WhatsApp</button>
+        <button class="share-btn" style="background:#1877F2;color:#fff" onclick="shareDoc('fb')">📘 Facebook</button>
+        <button class="share-btn" style="background:var(--card);color:var(--text);border:1px solid var(--border)" onclick="shareDoc('copy')">📋 Copier</button>
+        <button class="share-btn" style="background:var(--card);color:var(--text);border:1px solid var(--border)" onclick="shareDoc('nat')">↗ Partager</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PICK CLIENT FOR DOC -->
+<div style="position:fixed;inset:0;background:var(--bg);z-index:560;display:none;flex-direction:column" id="m-pick-cl">
+  <div style="height:calc(var(--safe-t)+54px);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:flex-end;padding:0 14px 11px;gap:12px;flex-shrink:0">
+    <div onclick="document.getElementById('m-pick-cl').style.display='none'" style="color:var(--text2);font-size:22px;cursor:pointer;width:34px;height:34px;background:var(--card2);border:1px solid var(--border2);border-radius:10px;display:flex;align-items:center;justify-content:center;line-height:1">←</div>
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text)">Choisir un Client</div>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:12px" id="pick-cl-list"></div>
+</div>
+
+<!-- DIALOG EXIT -->
+<div class="dialog" id="dlg-exit">
+  <div class="dlg">
+    <div class="dlg-ico">👋</div>
+    <div class="dlg-t">Quitter l'application ?</div>
+    <div class="dlg-s">Toutes vos données sont sauvegardées.</div>
+    <div class="dlg-btns">
+      <button class="btn btn-outline btn-full" onclick="closeOverlays()">Annuler</button>
+      <button class="btn btn-red btn-full" onclick="history.go(-history.length)">Quitter</button>
+    </div>
+  </div>
+</div>
+
+<!-- DIALOG DEL -->
+<div class="dialog" id="dlg-del">
+  <div class="dlg">
+    <div class="dlg-ico">🗑️</div>
+    <div class="dlg-t">Supprimer ?</div>
+    <div class="dlg-s" id="dlg-del-txt">—</div>
+    <div class="dlg-btns">
+      <button class="btn btn-outline btn-full" onclick="closeOverlays()">Annuler</button>
+      <button class="btn btn-red btn-full" id="dlg-del-ok">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<div id="toasts"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// DATA & STORAGE
+// ═══════════════════════════════════════════════════
+const LD=(k,d)=>{try{const v=localStorage.getItem('she_'+k);return v?JSON.parse(v):d;}catch{return d;}};
+const SV=(k,v)=>{try{localStorage.setItem('she_'+k,JSON.stringify(v));}catch{}};
+
+// Default stock data
+const SD_DEF=[
+{id:1,art:"Vitrine Glace Sanson FRAMEC ⭐",cat:"Vitrine glace",cout:800,prix:3500,av:.90,st:"⭐ URGENT",trav:"Fixation + polissage",prov:"Korba",de:"2025-07-29"},
+{id:2,art:"Vitrine Glace Côte d'Or vanille ISA",cat:"Vitrine glace",cout:1500,prix:4000,av:.95,st:"⭐ URGENT",trav:"Finition → +2500 DT marge !",prov:"Laouina",de:"2025-09-07"},
+{id:3,art:"Four Pizza Empero Frigotechnique #1",cat:"Four pizza",cout:1700,prix:2500,av:1.0,st:"✅ PRÊT",trav:"100% opérationnel",prov:"Montplaisir",de:"2025-11-25"},
+{id:4,art:"Four Pizza Empero Frigotechnique #2",cat:"Four pizza",cout:1700,prix:2500,av:1.0,st:"✅ PRÊT",trav:"100% opérationnel",prov:"Omrane",de:"2026-01-06"},
+{id:5,art:"Comptoir Sandwich 2m Frigotechnique marbre",cat:"Comptoir sandwich",cout:1300,prix:3300,av:.90,st:"🔵 Prioritaire",trav:"Mastique + polissage",prov:"Nabeul",de:"2026-02-16"},
+{id:6,art:"Machine Café Reneka française",cat:"Machine café",cout:1500,prix:2000,av:.95,st:"🔵 Prioritaire",trav:"Polissage général",prov:"Laouina",de:"2025-09-07"},
+{id:7,art:"Congélateur horiz. vitré 1,5m UGUR",cat:"Congélateur horiz vitré",cout:700,prix:1200,av:1.0,st:"✅ PRÊT",trav:"Excellent état",prov:"Mornag",de:"2026-01-04"},
+{id:8,art:"Four Pâtisserie 4 étages Frigotechnique",cat:"Four pâtisserie",cout:1700,prix:2400,av:1.0,st:"✅ PRÊT",trav:"Polissage final",prov:"Sliman",de:"2026-01-11"},
+{id:9,art:"Réfrig. vertical vitré Président UGUR",cat:"Réfrig. vertical vitré",cout:900,prix:1400,av:.95,st:"🔵 Prioritaire",trav:"Remplacement socle + polissage",prov:"La Marsa",de:"2026-03-08"},
+{id:10,art:"Friteuse jamais utilisée + garantie",cat:"Friteuse",cout:500,prix:1000,av:1.0,st:"✅ PRÊT",trav:"Jamais utilisée",prov:"Mourouj 6",de:"2026-03-01"},
+];
+const VD_DEF=[
+{id:1,art:"Machine café gaz + moulin",cat:"Machine café",cout:3000,vendu:3500,dv:"2025-07-17",typ:"C",prov:"Mégrine"},
+{id:2,art:"Vitrine à glace blindée inox ISA",cat:"Vitrine glace",cout:1700,vendu:3500,dv:"2025-07-15",typ:"C",prov:"Mahdia"},
+{id:3,art:"Congélateur vertical UGUR jaune Palme",cat:"Congélateur vertical vitré",cout:1000,vendu:1700,dv:"2025-10-01",typ:"C",prov:"Mohsen / Mhamdia"},
+{id:4,art:"Buffet réfrigéré pro 4 bacs",cat:"Buffet réfrig.",cout:1400,vendu:2500,dv:"2025-12-30",typ:"C",prov:"Laouina"},
+{id:5,art:"Réfrig. vertical vitré Coca Cola",cat:"Réfrig. vertical vitré",cout:950,vendu:1500,dv:"2025-10-10",typ:"C",prov:"Mohsen / Mhamdia"},
+{id:6,art:"Vitrine verticale réfrig. 4 faces",cat:"Vitrine réfrig.",cout:650,vendu:2150,dv:"2026-02-22",typ:"C",prov:"Cité Tadhamon"},
+{id:7,art:"Congélateur horiz. vitré blanc UGUR",cat:"Congélateur vertical vitré",cout:1100,vendu:1900,dv:"2026-01-22",typ:"C",prov:"Mhamdia"},
+{id:8,art:"Congélateur horiz. vitré Novum",cat:"Congélateur horiz vitré",cout:800,vendu:1500,dv:"2026-02-16",typ:"C",prov:"Fahs"},
+];
+const CL_DEF=[
+{id:1,nom:"Mohsen",zone:"Mhamdia",tel:"+216 50 XXX XXX",cats:"Congélateurs · Vitrines",nb:5,mont:9600,note:"VIP — priorité absolue",type:"client"},
+{id:2,nom:"Adel",zone:"Radès",tel:"+216 XX XXX XXX",cats:"Comptoirs · Pétrins",nb:6,mont:7600,note:"Partenaire fidèle",type:"client"},
+{id:3,nom:"Zouhaier",zone:"Hammam Lif",tel:"+216 XX XXX XXX",cats:"Vitrines glace ISA",nb:2,mont:3800,note:"Spécialiste glacé",type:"client"},
+];
+const CF_DEF={loyer:750,gasoil:300,internet:80,entretien:80,fond_encaisse:30000,fond_creance:15000,wa:'+21620910909',fb:'',ig:'',tk:''};
+
+let SD=LD('s',SD_DEF), VD=LD('v',VD_DEF), CL=LD('c',CL_DEF), CF=LD('cfg',CF_DEF);
+let nS=LD('ns',100), nV=LD('nv',200), nC=LD('nc',10);
+let notes=LD('notes',[]), contacts=LD('contacts',CL_DEF.map(c=>({...c,type:'client'})));
+let docsData=LD('docs',[]), docNum=LD('docnum',1);
+let docLines=[], curDocId=null, docTabA='devis';
+let gTab_active='stock', repTab_active='contacts';
+let photos=LD('photos',[]);
+
+const SA=()=>{SV('s',SD);SV('v',VD);SV('c',CL);SV('cfg',CF);SV('ns',nS);SV('nv',nV);SV('nc',nC);SV('notes',notes);SV('contacts',contacts);SV('docs',docsData);SV('docnum',docNum);SV('photos',photos);};
+const fm=n=>new Intl.NumberFormat('fr-TN').format(Math.round(n))+' DT';
+const fd=d=>d?new Date(d+'T00:00').toLocaleDateString('fr-FR'):'—';
+const td=()=>new Date().toISOString().slice(0,10);
+const tc=()=>new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+const avi=nom=>{const cs=['#F5A623','#06D6A0','#4ECDC4','#A78BFA','#FF4757','#FF6B6B'];let h=0;for(const c of(nom||''))h+=c.charCodeAt(0);return cs[h%cs.length];};
+const ini=s=>(s||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+const BST={'✅ PRÊT':'b-pret','⭐ URGENT':'b-urg','🔵 Prioritaire':'b-pri','En cours':'b-enc','⚠ PERTE':'b-per'};
+function toast(m,t=''){const el=document.createElement('div');el.className='toast '+(t||'');el.textContent=m;document.getElementById('toasts').appendChild(el);setTimeout(()=>el.remove(),2700);}
+function confirmDel(txt,cb){document.getElementById('dlg-del-txt').textContent=txt;document.getElementById('dlg-del-ok').onclick=()=>{closeOverlays();cb();};document.getElementById('dlg-del').classList.add('on');}
+function catCode(cat,id){const m={'vitrine glace':'R-VG','vitrine réfrig':'R-VR','réfrig. vertical':'R-FV','congélateur horiz':'R-CH','congélateur vertical':'R-CV','buffet réfrig':'R-BF','four pizza':'C-FP','four pâtisserie':'C-FT','four':'C-FG','machine café':'B-MC','chauffe croissant':'B-CC','comptoir sandwich':'B-CS','pétrin':'C-PT','friteuse':'C-FI','grillade':'C-GR','mobilier':'M-MB','accessoires':'A-AC'};const cl=(cat||'').toLowerCase();let code='D-DI';for(const[k,v]of Object.entries(m))if(cl.includes(k)){code=v;break;}return id?`${code}-${String(id).padStart(3,'0')}`:code;}
+function catImg(cat){const cl=(cat||'').toLowerCase();if(cl.includes('glace'))return'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=600&q=80&fit=crop';if(cl.includes('réfrig')||cl.includes('frigo'))return'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop';if(cl.includes('four'))return'https://images.unsplash.com/photo-1556909114-44e3e9399a2b?w=600&q=80&fit=crop';if(cl.includes('café'))return'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80&fit=crop';if(cl.includes('comptoir'))return'https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=600&q=80&fit=crop';if(cl.includes('congélateur'))return'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80&fit=crop';if(cl.includes('pétrin'))return'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80&fit=crop';if(cl.includes('friteuse'))return'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=600&q=80&fit=crop';return'https://images.unsplash.com/photo-1581299894007-aaa50297cf16?w=600&q=80&fit=crop';}
+
+// ── CLOCK & DATE ──────────────────────────────────────────
+function updateClock(){
+  const now=new Date();
+  const ti=now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  const da=now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  const el1=document.getElementById('hh-time');const el2=document.getElementById('hh-date');
+  if(el1)el1.textContent=ti;if(el2)el2.textContent=da;
+}
+setInterval(updateClock,10000);updateClock();
+
+// ── NAVIGATION ────────────────────────────────────────────
+let curPanel=null, exitCount=0, exitTimer=null;
+function openPanel(id){
+  curPanel=id;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  const p=document.getElementById('p-'+id);
+  if(p){p.classList.add('on');const fn=PANEL_RENDERERS[id];if(fn)fn();}
+}
+function closePanel(){
+  if(curPanel){document.getElementById('p-'+curPanel)?.classList.remove('on');curPanel=null;}
+}
+function closeOverlays(){document.querySelectorAll('.overlay.on,.dialog.on').forEach(e=>e.classList.remove('on'));}
+function closeDoc(){document.getElementById('m-doc').style.display='none';}
+window.addEventListener('popstate',()=>{
+  history.pushState(null,'',location.href);
+  const mfull=document.getElementById('m-doc');
+  if(mfull.style.display!=='none'){closeDoc();return;}
+  const ov=document.querySelector('.overlay.on');if(ov){ov.classList.remove('on');return;}
+  const dlg=document.querySelector('.dialog.on');if(dlg){dlg.classList.remove('on');return;}
+  if(curPanel){closePanel();return;}
+  exitCount++;
+  if(exitCount===1){toast('Appuyez encore pour quitter');exitTimer=setTimeout(()=>exitCount=0,2500);}
+  else{clearTimeout(exitTimer);exitCount=0;document.getElementById('dlg-exit').classList.add('on');}
+});
+history.pushState(null,'',location.href);
+
+// ── HOME GRID ─────────────────────────────────────────────
+const TILES=[
+  {id:1,icon:'🕌',label:'تعبّد',color:'#1B2A3E',glow:'rgba(6,214,160,.2)'},
+  {id:2,icon:'📝',label:'Notes',color:'#1A2A1A',glow:'rgba(6,214,160,.15)'},
+  {id:3,icon:'📷',label:'Photo/Vidéo',color:'#1A1A2E',glow:'rgba(78,205,196,.15)'},
+  {id:4,icon:'💬',label:'Messagerie',color:'#0D1B0D',glow:'rgba(37,211,102,.2)'},
+  {id:5,icon:'🏪',label:'Recherche',color:'#0D1526',glow:'rgba(24,119,242,.2)'},
+  {id:6,icon:'📢',label:'Publier',color:'#1A1020',glow:'rgba(167,139,250,.2)'},
+  {id:7,icon:'📊',label:'Gestion',color:'#1A1A0D',glow:'rgba(245,166,35,.2)'},
+  {id:8,icon:'📖',label:'Catalogue',color:'#1A0D0D',glow:'rgba(255,71,87,.15)'},
+  {id:9,icon:'🧾',label:'Devis/Fact.',color:'#1A150A',glow:'rgba(245,166,35,.15)'},
+  {id:10,icon:'🔍',label:'Lens',color:'#0D1A1A',glow:'rgba(78,205,196,.15)'},
+  {id:11,icon:'🛠️',label:'Outils',color:'#1A1A1A',glow:'rgba(255,255,255,.08)'},
+  {id:12,icon:'🗺️',label:'Maps',color:'#0D1A0D',glow:'rgba(6,214,160,.15)'},
+  {id:13,icon:'🧮',label:'Calcul.',color:'#1A1520',glow:'rgba(167,139,250,.15)'},
+  {id:14,icon:'📰',label:'Actualités',color:'#1A150A',glow:'rgba(245,166,35,.15)'},
+  {id:15,icon:'📻',label:'Radio',color:'#0D1A15',glow:'rgba(6,214,160,.15)'},
+  {id:16,icon:'📞',label:'Répertoire',color:'#1A1A2E',glow:'rgba(78,205,196,.15)'},
+  {id:17,icon:'⚙️',label:'Config',color:'#1A1A1A',glow:'rgba(255,255,255,.06)'},
+];
+function buildGrid(){
+  const g=document.getElementById('home-grid');
+  g.innerHTML=TILES.map(t=>`
+    <div class="tile" onclick="${t.id===8?'openCatalogue()':'openPanel('+t.id+')'}" style="background:${t.color};box-shadow:0 0 20px ${t.glow}">
+      <div style="font-size:26px;line-height:1">${t.icon}</div>
+      <div class="tile-lbl">${t.label}</div>
+    </div>`).join('');
+}
+
+// ── PANEL RENDERERS ───────────────────────────────────────
+const PANEL_RENDERERS={
+  1:rPrayer,2:rNotes,3:rPhoto,4:()=>{},5:()=>{},6:rPublier,
+  7:rGestion,9:rDocs,11:rTools,14:rNews,15:rRadio,16:rRepertoire,17:rConfig
+};
+
+// 1. PRAYER ───────────────────────────────────────────────
+const PRAYERS_FR=[['Fajr','الفجر'],['Sunrise','الشروق'],['Dhuhr','الظهر'],['Asr','العصر'],['Maghrib','المغرب'],['Isha','العشاء']];
+function calcPrayerTimes(){
+  // Tunis coordinates: 36.8°N, 10.18°E
+  const now=new Date();
+  const y=now.getFullYear(),m=now.getMonth()+1,d=now.getDate();
+  const jdn=(367*y-Math.floor(7*(y+Math.floor((m+9)/12))/4)+Math.floor(275*m/9)+d+1721013.5+(12/24));
+  const D=jdn-2451545;const g=(357.529+0.98560028*D)%360;const q=(280.459+0.98564736*D)%360;
+  const L=(q+2*0.0167*Math.sin(g*Math.PI/180)+2*0.000014*Math.sin(2*g*Math.PI/180))*Math.PI/180;
+  const e=(23.439-0.00000036*D)*Math.PI/180;const RA=Math.atan2(Math.cos(e)*Math.sin(L),Math.cos(L))/(15*Math.PI/180);
+  const dec=Math.asin(Math.sin(e)*Math.sin(L));
+  const EqT=(q/15-((RA+360)%24));const lat=36.8*Math.PI/180;
+  const Dhuhr=12-EqT+(10.18/15);
+  const ha=(t)=>Math.acos((Math.sin(t*Math.PI/180)-Math.sin(dec)*Math.sin(lat))/(Math.cos(dec)*Math.cos(lat)))*180/Math.PI/15;
+  const Fajr=Dhuhr-ha(-18);const Sunrise=Dhuhr-ha(-0.833);const Asr=Dhuhr+ha(Math.atan(1+Math.tan(Math.abs(lat-dec)))*180/Math.PI);
+  const Maghrib=Dhuhr+ha(-0.833);const Isha=Dhuhr+ha(-18);
+  const fmt=h=>{const hour=Math.floor(h);const min=Math.round((h-hour)*60);return`${String(hour).padStart(2,'0')}:${String(min).padStart(2,'0')}`};
+  return[fmt(Fajr),fmt(Sunrise),fmt(Dhuhr),fmt(Asr),fmt(Maghrib),fmt(Isha)];
+}
+function rPrayer(){
+  const times=calcPrayerTimes();
+  const now=new Date();const nowMins=now.getHours()*60+now.getMinutes();
+  let nextIdx=0,nextTime='—';
+  times.forEach((t,i)=>{const[h,m]=t.split(':').map(Number);const mins=h*60+m;if(mins>nowMins&&nextIdx===0){nextIdx=i;nextTime=t;}});
+  if(nextIdx===0){nextIdx=0;nextTime=times[0];}
+  document.getElementById('pr-next-time').textContent=nextTime;
+  document.getElementById('pr-next-label').textContent='Prochaine : '+PRAYERS_FR[nextIdx][0]+' · '+PRAYERS_FR[nextIdx][1];
+  document.getElementById('hh-next-prayer-val').textContent=PRAYERS_FR[nextIdx][0]+' '+nextTime;
+  document.getElementById('prayer-list').innerHTML=times.map((t,i)=>{
+    const[h,m]=t.split(':').map(Number);const mins=h*60+m;const isPast=mins<nowMins;const isNext=i===nextIdx&&!isPast;
+    return`<div class="prayer-row" style="${isNext?'background:rgba(6,214,160,.06);':''}">
+      <div><div class="prayer-name">${PRAYERS_FR[i][0]}</div><div class="prayer-name-ar">${PRAYERS_FR[i][1]}</div></div>
+      <div style="display:flex;align-items:center;gap:10px">
+        ${isPast?'<span style="font-size:12px;color:var(--green)">✓</span>':''}
+        ${isNext?'<span style="font-size:10px;background:var(--green2);color:var(--green);border-radius:20px;padding:2px 8px;font-weight:700">Suivante</span>':''}
+        <div class="prayer-t" style="color:${isPast?'var(--text3)':isNext?'var(--green)':'var(--gold)'}">${t}</div>
+      </div>
+    </div>`;}).join('');
+}
+
+// 2. NOTES ────────────────────────────────────────────────
+let editNoteId=null;
+function rNotes(){
+  const el=document.getElementById('notes-list');
+  if(!notes.length){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--text3);font-size:13px">Aucune note · Appuyez + pour créer</div>';return;}
+  el.innerHTML=notes.slice().reverse().map(n=>`
+    <div class="note-card">
+      <div class="note-del" onclick="deleteNote(${n.id})">🗑</div>
+      <div class="note-title" onclick="editNote(${n.id})">${n.title||'Note sans titre'}</div>
+      <div class="note-preview">${n.body||''}</div>
+      <div class="note-date">${n.date||'—'}</div>
+    </div>`).join('');
+}
+function openNewNote(){editNoteId=null;document.getElementById('sh-note-ttl').textContent='Nouvelle Note';document.getElementById('note-title-inp').value='';document.getElementById('note-body-inp').value='';document.getElementById('sh-note').classList.add('on');}
+function editNote(id){const n=notes.find(x=>x.id===id);if(!n)return;editNoteId=id;document.getElementById('sh-note-ttl').textContent='Modifier Note';document.getElementById('note-title-inp').value=n.title||'';document.getElementById('note-body-inp').value=n.body||'';document.getElementById('sh-note').classList.add('on');}
+function saveNote(){const t=document.getElementById('note-title-inp').value.trim(),b=document.getElementById('note-body-inp').value.trim();if(!t&&!b){toast('Écrivez quelque chose !','r');return;}if(editNoteId){const i=notes.findIndex(x=>x.id===editNoteId);if(i>=0){notes[i].title=t;notes[i].body=b;notes[i].date=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});}}else{notes.push({id:Date.now(),title:t,body:b,date:new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})});}SA();closeOverlays();rNotes();toast('Note sauvegardée','g');}
+function deleteNote(id){confirmDel('Supprimer cette note ?',()=>{notes=notes.filter(x=>x.id!==id);SA();rNotes();});}
+
+// 3. PHOTO ────────────────────────────────────────────────
+function rPhoto(){renderPhotoGrid();}
+function handlePhoto(inp){if(inp.files[0]){const r=new FileReader();r.onload=e=>{photos.push({id:Date.now(),src:e.target.result,date:new Date().toLocaleDateString('fr-FR')});SA();renderPhotoGrid();toast('Photo sauvegardée','g');};r.readAsDataURL(inp.files[0]);}}
+function handleGallery(inp){Array.from(inp.files).forEach(f=>{const r=new FileReader();r.onload=e=>{photos.push({id:Date.now(),src:e.target.result,date:new Date().toLocaleDateString('fr-FR')});SA();renderPhotoGrid();};r.readAsDataURL(f);});}
+function renderPhotoGrid(){const g=document.getElementById('photo-grid');const em=document.getElementById('photo-empty');if(!photos.length){if(g)g.innerHTML='';if(em)em.style.display='block';return;}if(em)em.style.display='none';if(g)g.innerHTML=photos.slice().reverse().map(p=>`<div style="position:relative;padding-top:100%;border-radius:8px;overflow:hidden;cursor:pointer" onclick="viewPhoto('${p.id}')"><img src="${p.src}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div onclick="event.stopPropagation();deletePhoto(${p.id})" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,.6);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px">✕</div></div>`).join('');}
+function deletePhoto(id){photos=photos.filter(x=>x.id!==id);SA();renderPhotoGrid();}
+function viewPhoto(id){const p=photos.find(x=>x.id==id);if(!p)return;const w=window.open('','_blank');w.document.write(`<html><body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh"><img src="${p.src}" style="max-width:100%;max-height:100vh"><button onclick="window.close()" style="position:fixed;top:10px;right:10px;background:rgba(0,0,0,.7);color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer">✕</button></body></html>`);}
+
+// 6. PUBLIER ──────────────────────────────────────────────
+function rPublier(){
+  const tpls=[
+    {title:'Annonce standard CHR',body:`🔵 *SYNERGY HORECA EQUIPMENT*\n📦 Article disponible — Équipement CHR professionnel occasion\n✅ Contrôlé · Révisé · Garanti\n📍 Radès Plage · Grand Tunis\n📞 +216 20 910 909\n#HorecaTunisie #CHR #EquipementProfessionnel`},
+    {title:'Vitrine glace ISA',body:`❄️ *VITRINE À GLACE PROFESSIONNELLE*\n🏆 Marque ISA · Made in Italy\n✅ Révisée · Garantie · Prête à vendre\n💰 Prix négociable\n📞 +216 20 910 909 — Radès Plage\n#VitrinGlace #ISA #HorecaTunisie`},
+    {title:'Four pizza/pâtisserie',body:`🍕 *FOUR PROFESSIONNEL*\n✅ Jamais utilisé / occasion révisé\n🔧 Contrôlé · Fonctionnel garanti\n📍 Radès Plage · Grand Tunis\n📞 +216 20 910 909\n#FourPizza #Patisserie #Boulangerie`},
+  ];
+  document.getElementById('templates-list').innerHTML=tpls.map((t,i)=>`
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:11px;display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <div style="font-size:12px;font-weight:700;color:var(--text)">${t.title}</div>
+      <button class="btn btn-ghost btn-sm" onclick="copyTemplate(${i})">Copier</button>
+    </div>`).join('');
+  window._tpls=tpls;
+}
+function copyTemplate(i){const t=window._tpls[i];if(navigator.clipboard)navigator.clipboard.writeText(t.body).then(()=>toast('Modèle copié ! Collez sur Facebook','g'));else{const ta=document.createElement('textarea');ta.value=t.body;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('Copié !','g');}}
+
+// 7. GESTION ──────────────────────────────────────────────
+function rGestion(){
+  const tMarge=VD.reduce((a,v)=>a+(v.vendu-v.cout),0);
+  const tVentes=VD.reduce((a,v)=>a+v.vendu,0);
+  const skPot=SD.reduce((a,s)=>a+s.prix,0);
+  const charges=(CF.loyer||0)+(CF.gasoil||0)+(CF.internet||0)+(CF.entretien||0);
+  document.getElementById('gest-kpis').innerHTML=`
+    <div class="kpi" onclick="gTab('ventes')"><div class="kpi-v" style="color:var(--green)">${fm(tMarge)}</div><div class="kpi-l">Marge totale</div></div>
+    <div class="kpi" onclick="gTab('stock')"><div class="kpi-v" style="color:var(--blue)">${fm(skPot)}</div><div class="kpi-l">Stock potentiel</div></div>
+    <div class="kpi"><div class="kpi-v" style="color:var(--gold)">${VD.length}</div><div class="kpi-l">Ventes totales</div></div>
+    <div class="kpi"><div class="kpi-v" style="color:var(--red)">${fm(charges)}</div><div class="kpi-l">Charges/mois</div></div>
+    <div class="kpi wide"><div class="kpi-v">${fm(tVentes)}</div><div class="kpi-l">Chiffre d'affaires total · Encaissé: ${fm(CF.fond_encaisse||0)} · Créance: ${fm(CF.fond_creance||0)}</div></div>`;
+  gTab('stock');
+}
+function gTab(t){
+  gTab_active=t;
+  ['stock','ventes','finance'].forEach(x=>{const e=document.getElementById('gt-'+x);if(e){e.style.color=x===t?'var(--gold)':'var(--text3)';e.style.borderBottomColor=x===t?'var(--gold)':'transparent';e.style.fontWeight=x===t?'700':'600';}});
+  const cont=document.getElementById('gest-content');
+  if(t==='stock'){
+    cont.innerHTML=SD.length?SD.map(s=>{const mg=s.prix-s.cout;const avp=Math.round((s.av||.5)*100);return`
+      <div class="scard">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div><span class="sc-code">${catCode(s.cat,s.id)}</span><div class="sc-name">${s.art}</div></div>
+          <span class="bdg ${BST[s.st]||'b-enc'}">${s.st}</span>
+        </div>
+        <div class="sc-row">
+          <div><div class="sc-price">${fm(s.prix)}</div><div style="font-size:10px;color:var(--green);font-weight:600">+${fm(mg)}</div></div>
+          <div style="display:flex;gap:7px">
+            <button class="btn btn-ghost btn-sm" onclick="openEditStock(${s.id})">✏️</button>
+            <button class="btn btn-green btn-sm" onclick="openSellStock(${s.id})">Vendre</button>
+            <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="confirmDel('Supprimer cet article ?',()=>{SD=SD.filter(x=>x.id!==${s.id});SA();gTab('stock');})">🗑</button>
+          </div>
+        </div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${avp}%;background:var(--gold)"></div></div>
+        <div style="font-size:10px;color:var(--text3)">${s.trav||''}</div>
+      </div>`}).join(''):'<div style="text-align:center;padding:30px;color:var(--text3)">Stock vide</div>';
+  } else if(t==='ventes'){
+    cont.innerHTML=VD.slice().sort((a,b)=>(b.dv||'').localeCompare(a.dv||'')).map(v=>{const mg=v.vendu-v.cout;return`
+      <div class="vcard" style="border-left-color:${mg>=0?'var(--green)':'var(--red)'}">
+        <div style="flex:1"><div class="sc-name">${v.art}</div><div style="font-size:11px;color:var(--text2);margin-top:3px">${fd(v.dv)} · ${v.prov||'—'}</div></div>
+        <div style="text-align:right">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:${mg>=0?'var(--green)':'var(--red)'}">${mg>=0?'+':''}${fm(mg)}</div>
+          <div style="font-size:10px;color:var(--text3)">${fm(v.vendu)}</div>
+        </div>
+      </div>`}).join('')||'<div style="text-align:center;padding:30px;color:var(--text3)">Aucune vente</div>';
+  } else {
+    const charges=(CF.loyer||0)+(CF.gasoil||0)+(CF.internet||0)+(CF.entretien||0);
+    cont.innerHTML=`
+      <div class="card" style="margin-bottom:10px"><div class="card-bd">
+        <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">Charges Mensuelles</div>
+        ${[['Loyer','loyer'],['Gasoil','gasoil'],['Internet','internet'],['Entretien','entretien']].map(([n,k])=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="font-size:12px;color:var(--text2)">${n}</span><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;color:var(--red)">${fm(CF[k]||0)}</span></div>`).join('')}
+        <div style="display:flex;justify-content:space-between;padding:10px 0;"><span style="font-size:13px;font-weight:700">TOTAL</span><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:var(--red)">${fm(charges)}</span></div>
+      </div></div>
+      <div class="card"><div class="card-bd">
+        <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">Trésorerie</div>
+        ${[['Encaissé','fond_encaisse','var(--green)'],['Créance','fond_creance','var(--red)']].map(([n,k,c])=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="font-size:12px;color:var(--text2)">${n}</span><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:${c}">${fm(CF[k]||0)}</span></div>`).join('')}
+      </div></div>`;
+  }
+}
+function openAddStockSheet(){document.getElementById('sh-st-ttl').textContent='Nouvel Article';document.getElementById('sf-id').value='';['sf-art','sf-prov','sf-trav'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});document.getElementById('sf-de').value=td();document.getElementById('sf-av').value=80;document.getElementById('sf-cout').value='';document.getElementById('sf-prix').value='';document.getElementById('sh-stock').classList.add('on');}
+function openEditStock(id){const s=SD.find(x=>x.id===id);if(!s)return;document.getElementById('sh-st-ttl').textContent='Modifier Article';document.getElementById('sf-id').value=id;document.getElementById('sf-art').value=s.art;document.getElementById('sf-cat').value=s.cat;document.getElementById('sf-st').value=s.st;document.getElementById('sf-cout').value=s.cout;document.getElementById('sf-prix').value=s.prix;document.getElementById('sf-av').value=Math.round((s.av||.5)*100);document.getElementById('sf-de').value=s.de||td();document.getElementById('sf-prov').value=s.prov||'';document.getElementById('sf-trav').value=s.trav||'';document.getElementById('sh-stock').classList.add('on');}
+function saveStockItem(){const art=document.getElementById('sf-art').value.trim();if(!art){toast('Article requis !','r');return;}const id=document.getElementById('sf-id').value;const data={art,cat:document.getElementById('sf-cat').value,st:document.getElementById('sf-st').value,cout:+document.getElementById('sf-cout').value||0,prix:+document.getElementById('sf-prix').value||0,av:(+document.getElementById('sf-av').value||80)/100,de:document.getElementById('sf-de').value||td(),prov:document.getElementById('sf-prov').value,trav:document.getElementById('sf-trav').value};if(id){const i=SD.findIndex(x=>x.id==id);if(i>=0)SD[i]={...SD[i],...data};}else{data.id=nS++;SD.push(data);}SA();closeOverlays();gTab(gTab_active);toast(`${id?'Modifié':'Ajouté'} !`,'g');}
+function openSellStock(id){const s=SD.find(x=>x.id===id);if(!s)return;document.getElementById('vf-sel').innerHTML='<option value="">—</option>';document.getElementById('vf-art').value=s.art;document.getElementById('vf-cout').value=s.cout;document.getElementById('vf-vendu').value=s.prix;document.getElementById('vf-dv').value=td();document.getElementById('vf-prov').value='';document.getElementById('vf-mprev').style.display='none';document.getElementById('sh-vente').setAttribute('data-sid',id);prvVMarge();document.getElementById('sh-vente').classList.add('on');}
+function fillVente(){const id=+document.getElementById('vf-sel').value;if(!id)return;const s=SD.find(x=>x.id===id);if(!s)return;document.getElementById('vf-art').value=s.art;document.getElementById('vf-cout').value=s.cout;document.getElementById('vf-vendu').value=s.prix;prvVMarge();}
+function prvVMarge(){const c=+document.getElementById('vf-cout').value||0,v=+document.getElementById('vf-vendu').value||0;if(!c&&!v){document.getElementById('vf-mprev').style.display='none';return;}const mg=v-c;document.getElementById('vf-mprev').style.display='block';const el=document.getElementById('vf-mval');el.textContent=(mg>=0?'+':'')+fm(mg);el.style.color=mg>=0?'var(--green)':'var(--red)';}
+function saveVenteItem(){const art=document.getElementById('vf-art').value.trim(),vendu=+document.getElementById('vf-vendu').value;if(!art||!vendu){toast('Article et prix requis !','r');return;}const sid=+document.getElementById('sh-vente').getAttribute('data-sid')||0;const v={id:nV++,art,cat:'',cout:+document.getElementById('vf-cout').value||0,vendu,typ:document.getElementById('vf-typ').value,de:td(),dv:document.getElementById('vf-dv').value,prov:document.getElementById('vf-prov').value};VD.push(v);if(sid)SD=SD.filter(x=>x.id!==sid);const prov=document.getElementById('vf-prov').value;if(prov){const nom=prov.split('/')[0].trim();const ex=CL.find(c=>c.nom.toLowerCase()===nom.toLowerCase());if(ex){ex.nb=(ex.nb||0)+1;ex.mont=(ex.mont||0)+vendu;}else CL.push({id:nC++,nom,zone:prov.includes('/')?prov.split('/').slice(1).join('/').trim():'',tel:'—',cats:art,nb:1,mont:vendu,note:'Auto'});}SA();closeOverlays();gTab(gTab_active);toast(`Vendu ! +${fm(v.vendu-v.cout)}`,'g');}
+
+// 8. CATALOGUE BOOK ───────────────────────────────────────
+let catIdx=0;
+function openCatalogue(){
+  const items=SD.filter(s=>s.st!=='⚠ PERTE');
+  if(!items.length){toast('Stock vide','r');return;}
+  catIdx=0;
+  document.getElementById('cat-book').style.display='flex';
+  const slides=document.getElementById('cat-slides');
+  slides.innerHTML=items.map((s,i)=>`
+    <div class="cat-book-slide" style="opacity:${i===0?1:0};pointer-events:${i===0?'all':'none'};background-image:url('${catImg(s.cat)}')">
+      <div class="cat-book-overlay"></div>
+      <div class="cat-book-info">
+        <div class="cat-book-code">${catCode(s.cat,s.id)}</div>
+        <div class="cat-book-name">${s.art}</div>
+        <div class="cat-book-meta">📍 ${s.prov||'—'} · ${fd(s.de)}<br>${s.trav||''}</div>
+        <div class="cat-book-price">${fm(s.prix)}</div>
+        <div style="margin-top:10px"><span class="bdg ${BST[s.st]||'b-enc'}">${s.st}</span></div>
+      </div>
+    </div>`).join('');
+  document.getElementById('cat-counter').textContent=`1 / ${items.length}`;
+  const dots=document.getElementById('cat-dots-row');
+  dots.innerHTML=items.map((_,i)=>`<div class="cat-dot ${i===0?'on':''}"></div>`).join('');
+  document.getElementById('cat-book')._items=items;
+  // Touch swipe for catalogue
+  let tx=0;
+  const book=document.getElementById('cat-book');
+  book.ontouchstart=e=>{tx=e.touches[0].clientX;};
+  book.ontouchend=e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)catNav(dx<0?1:-1);};
+}
+function catNav(dir){
+  const book=document.getElementById('cat-book');const items=book._items||[];
+  const slides=document.querySelectorAll('.cat-book-slide');
+  if(!slides.length)return;
+  const newIdx=Math.max(0,Math.min(items.length-1,catIdx+dir));
+  if(newIdx===catIdx)return;
+  slides[catIdx].style.opacity=0;slides[catIdx].style.pointerEvents='none';
+  catIdx=newIdx;
+  slides[catIdx].style.opacity=1;slides[catIdx].style.pointerEvents='all';
+  document.getElementById('cat-counter').textContent=`${catIdx+1} / ${items.length}`;
+  document.querySelectorAll('.cat-dot').forEach((d,i)=>d.className='cat-dot'+(i===catIdx?' on':''));
+}
+function closeCatalogue(){document.getElementById('cat-book').style.display='none';}
+
+// 9. DOCUMENTS ────────────────────────────────────────────
+function docTab(t){docTabA=t;['devis','facture'].forEach(x=>{const e=document.getElementById('dta-'+x);if(e){e.style.color=x===t?'var(--gold)':'var(--text3)';e.style.borderBottomColor=x===t?'var(--gold)':'transparent';e.style.fontWeight=x===t?'700':'600';}});rDocs();}
+function rDocs(){
+  const d=docsData.filter(x=>x.docType===docTabA).slice().reverse();
+  document.getElementById('doc-list').innerHTML=d.length?d.map(doc=>{
+    const st={'paid':'✅ Payé','partial':'⚡ Partiel','pending':'⏳ Attente'}[doc.status]||'';
+    return`<div class="card" style="margin-bottom:10px"><div class="card-bd">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+        <div style="flex:1">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700">N°${String(doc.num).padStart(4,'0')} · ${doc.docType==='facture'?'Facture':'Devis'}</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">${fd(doc.date)} · ${doc.client||'—'}${doc.tel?' · '+doc.tel:''}</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--gold);margin-top:4px">${fm(doc.total)}</div>
+          ${doc.docType==='facture'&&st?`<div style="font-size:11px;margin-top:4px;color:var(--text2)">${st}</div>`:''}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <button class="btn btn-gold btn-sm" onclick="editDoc(${doc.id})">Voir</button>
+          <button class="btn btn-ghost btn-sm" onclick="shareDocById(${doc.id})">📤</button>
+          <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="confirmDel('Supprimer ?',()=>{docsData=docsData.filter(x=>x.id!==${doc.id});SA();rDocs();})">🗑</button>
+        </div>
+      </div>
+    </div></div>`;}).join(''):`<div style="text-align:center;padding:40px;color:var(--text3)"><div style="font-size:40px;margin-bottom:12px;opacity:.2">${docTabA==='facture'?'🧾':'📄'}</div><p>Aucun ${docTabA}</p><br><button class="btn btn-gold btn-sm" onclick="openNewDoc('${docTabA}')">Créer ${docTabA==='devis'?'un devis':'une facture'}</button></div>`;
+}
+function openNewDoc(type){curDocId=null;docLines=[];document.getElementById('dc-type').value=type;document.getElementById('dc-id').value='';document.getElementById('m-doc-ttl').textContent=type==='facture'?'Nouvelle Facture':'Nouveau Devis';document.getElementById('dc-status-wrap').style.display=type==='facture'?'block':'none';['dc-cnom','dc-ctel','dc-cadr','dc-notes'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});const dt=new Date();dt.setDate(dt.getDate()+30);document.getElementById('dc-valid').value=dt.toISOString().slice(0,10);if(document.getElementById('dc-status'))document.getElementById('dc-status').value='pending';renderDocLines();document.getElementById('m-doc').style.display='flex';}
+function editDoc(id){const doc=docsData.find(x=>x.id===id);if(!doc)return;curDocId=id;docLines=[...(doc.items||[])];document.getElementById('dc-type').value=doc.docType;document.getElementById('dc-id').value=id;document.getElementById('m-doc-ttl').textContent=doc.docType==='facture'?`Facture N°${String(doc.num).padStart(4,'0')}`:`Devis N°${String(doc.num).padStart(4,'0')}`;document.getElementById('dc-status-wrap').style.display=doc.docType==='facture'?'block':'none';document.getElementById('dc-cnom').value=doc.client||'';document.getElementById('dc-ctel').value=doc.tel||'';document.getElementById('dc-cadr').value=doc.adr||'';document.getElementById('dc-notes').value=doc.notes||'';document.getElementById('dc-valid').value=doc.valid||'';if(document.getElementById('dc-status'))document.getElementById('dc-status').value=doc.status||'pending';renderDocLines();document.getElementById('m-doc').style.display='flex';}
+function addDocLine(){docLines.push({art:'',qte:1,pu:0});renderDocLines();}
+function renderDocLines(){document.getElementById('dc-lines').innerHTML=docLines.length?docLines.map((l,i)=>`
+  <div class="doc-line">
+    <div style="display:flex;gap:8px;align-items:center"><input class="doc-line-inp" style="flex:1;margin:0" placeholder="Description" value="${l.art}" oninput="docLines[${i}].art=this.value"><div onclick="docLines.splice(${i},1);renderDocLines()" style="color:var(--red);cursor:pointer;font-size:20px;padding:2px 6px;flex-shrink:0">✕</div></div>
+    <div class="doc-nums"><input class="num-inp" type="number" placeholder="Qté" value="${l.qte}" oninput="docLines[${i}].qte=+this.value;updDocTotal()"><input class="num-inp" type="number" style="flex:1" placeholder="P.U. (DT)" value="${l.pu||''}" oninput="docLines[${i}].pu=+this.value;updDocTotal()"><div class="line-total">${fm(l.qte*l.pu)}</div></div>
+  </div>`).join(''):'<div style="padding:18px;text-align:center;color:var(--text3);font-size:12px">Cliquez "+ Ligne" pour ajouter</div>';updDocTotal();}
+function updDocTotal(){document.getElementById('dc-total').textContent=fm(docLines.reduce((a,l)=>a+l.qte*l.pu,0));}
+function saveDoc(){if(!docLines.length){toast('Ajoutez un article !','r');return;}const total=docLines.reduce((a,l)=>a+l.qte*l.pu,0);const type=document.getElementById('dc-type').value;const doc={id:curDocId||Date.now(),num:curDocId?docsData.find(x=>x.id===curDocId)?.num:docNum++,docType:type,date:td(),client:document.getElementById('dc-cnom').value||'—',tel:document.getElementById('dc-ctel').value,adr:document.getElementById('dc-cadr').value,notes:document.getElementById('dc-notes').value,valid:document.getElementById('dc-valid').value,status:document.getElementById('dc-status')?.value||'pending',total,items:[...docLines]};if(curDocId){const i=docsData.findIndex(x=>x.id===curDocId);if(i>=0)docsData[i]=doc;else docsData.push(doc);}else docsData.push(doc);SV('docnum',docNum);SA();toast(`${type==='facture'?'Facture':'Devis'} N°${String(doc.num).padStart(4,'0')} sauvegardé !`,'g');rDocs();}
+function getDocTxt(doc){const isF=doc.docType==='facture';return`⚡ *SYNERGY HORECA EQUIPMENT*\n${isF?'🧾 FACTURE':'📄 DEVIS'} N°${String(doc.num).padStart(4,'0')}\n\n👤 ${doc.client||'—'}${doc.tel?'\n📞 '+doc.tel:''}\n📅 ${fd(doc.date)}\n\n📋 Articles :\n${(doc.items||[]).map(l=>`• ${l.art} × ${l.qte} = ${fm(l.qte*l.pu)}`).join('\n')}\n\n💰 TOTAL : ${fm(doc.total)}${doc.notes?'\n\n📝 '+doc.notes:''}\n\n📞 +216 20 910 909 · Radès · Grand Tunis\n✅ Contrôlé · Révisé · Garanti`;}
+function shareDoc(m){saveDoc();const id=document.getElementById('dc-id').value?+document.getElementById('dc-id').value:null;const doc=id?docsData.find(x=>x.id===id):docsData[docsData.length-1];if(!doc)return;const txt=getDocTxt(doc);if(m==='wa')window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`,'_blank');else if(m==='fb')window.open(`https://www.facebook.com/sharer/sharer.php?quote=${encodeURIComponent(txt.slice(0,200))}`,'_blank');else if(m==='copy'){if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>toast('Copié !','g'));else{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('Copié !','g');}}else if(navigator.share)navigator.share({title:'Document Synergy Horeca',text:txt}).catch(()=>{});else toast('Utilisez Copier','r');}
+function shareDocById(id){const doc=docsData.find(x=>x.id===id);if(!doc)return;const txt=getDocTxt(doc);if(navigator.share)navigator.share({title:'Document',text:txt}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>toast('Copié !','g'));}
+function printDoc(){saveDoc();const id=document.getElementById('dc-id').value?+document.getElementById('dc-id').value:null;const doc=id?docsData.find(x=>x.id===id):docsData[docsData.length-1];if(!doc)return;const isF=doc.docType==='facture';const w=window.open('','_blank');w.document.write(`<!DOCTYPE html><html><head><title>${isF?'Facture':'Devis'} N°${String(doc.num).padStart(4,'0')}</title><meta charset="UTF-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;color:#111;font-size:12px;padding:26px;max-width:660px;margin:auto}.hdr{border-bottom:3px solid #0A0A0F;padding-bottom:13px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:flex-start}.brand{font-size:19px;font-weight:900;color:#0A0A0F;letter-spacing:1px}.sub{font-size:10px;color:#666;margin-top:2px}.doc-ttl{font-size:16px;font-weight:900;color:#F5A623;text-align:right}.doc-num{font-size:10px;color:#666;text-align:right;margin-top:2px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}.box{background:#F7F7F7;border-radius:6px;padding:10px}.lbl{font-size:9px;font-weight:900;text-transform:uppercase;color:#888;letter-spacing:.8px;margin-bottom:3px}table{width:100%;border-collapse:collapse;margin-bottom:12px}thead tr{background:#0A0A0F}thead th{color:#fff;padding:7px;font-size:10px;font-weight:700;text-align:left}tbody td{padding:7px;border-bottom:1px solid #eee;font-size:11px}tbody tr:nth-child(even){background:#F7F7F7}.total-row td{background:#0A0A0F!important;color:#fff!important;font-weight:700;padding:9px 7px!important;border:none!important;font-size:12px}.gval{color:#F5A623!important;font-size:15px!important;font-weight:900!important}.footer{margin-top:14px;padding-top:9px;border-top:1px solid #eee;display:flex;justify-content:space-between;font-size:10px;color:#999}.sign{border:1px solid #eee;border-radius:7px;padding:12px;text-align:center;width:160px;font-size:10px;color:#999;height:72px}@media print{body{padding:12px}}</style></head><body><div class="hdr"><div><div class="brand">⚡ SYNERGY HORECA EQUIPMENT</div><div class="sub">Equipements Horeca Occasion · Contrôlé · Révisé · Garanti</div><div class="sub">Rue Monji Slim · Radès Plage · Grand Tunis · +216 20 910 909</div></div><div><div class="doc-ttl">${isF?'FACTURE PRO FORMA':'DEVIS'}</div><div class="doc-num">N° ${String(doc.num).padStart(4,'0')} · ${fd(doc.date)}</div>${doc.valid?`<div class="doc-num">Validité : ${fd(doc.valid)}</div>`:''}</div></div><div class="grid"><div class="box"><div class="lbl">Émis par</div><div style="font-size:11px;font-weight:600;line-height:1.8">Synergy Horeca Equipment<br>Radès Plage · Grand Tunis<br>+216 20 910 909</div></div><div class="box"><div class="lbl">${isF?'Facturé à':'Devis pour'}</div><div style="font-size:11px;font-weight:600;line-height:1.8">${doc.client||'—'}${doc.tel?'<br>'+doc.tel:''}${doc.adr?'<br>'+doc.adr:''}</div></div></div><table><thead><tr><th>#</th><th>Description</th><th style="text-align:center">Qté</th><th style="text-align:right">P.U.</th><th style="text-align:right">Total</th></tr></thead><tbody>${(doc.items||[]).map((l,i)=>`<tr><td>${i+1}</td><td>${l.art||'—'}</td><td style="text-align:center">${l.qte}</td><td style="text-align:right">${l.pu} DT</td><td style="text-align:right;font-weight:600">${fm(l.qte*l.pu)}</td></tr>`).join('')}<tr class="total-row"><td colspan="4" style="text-align:right">TOTAL TTC</td><td class="gval">${fm(doc.total)}</td></tr></tbody></table>${doc.notes?`<div style="background:#F7F7F7;border-radius:6px;padding:9px;margin-top:10px;font-size:11px;color:#555">${doc.notes}</div>`:''}<div style="display:flex;justify-content:space-between;margin-top:18px;align-items:flex-end">${isF?`<div class="sign">Cachet & Signature Client<br><br>Date: __________</div>`:'<div></div>'}<div class="sign">Cachet & Signature<br>Synergy Horeca Equipment</div></div><div class="footer"><span>⚡ Synergy Horeca Equipment · Radès Plage · Grand Tunis</span><span>${fd(td())}</span></div></body></html>`);w.document.close();setTimeout(()=>w.print(),400);}
+function pickDocClient(){document.getElementById('pick-cl-list').innerHTML=CL.map(c=>`<div style="display:flex;align-items:center;gap:12px;padding:13px;border-bottom:1px solid var(--border);cursor:pointer;background:var(--bg)" onclick="selDocClient(${c.id})"><div style="width:40px;height:40px;border-radius:50%;background:${avi(c.nom)};display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:#080810;flex-shrink:0">${ini(c.nom)}</div><div><div style="font-size:13px;font-weight:700;color:var(--text)">${c.nom}</div><div style="font-size:11px;color:var(--text2)">📞 ${c.tel}</div></div></div>`).join('');document.getElementById('m-pick-cl').style.display='flex';}
+function selDocClient(id){const c=CL.find(x=>x.id===id);if(!c)return;document.getElementById('dc-cnom').value=c.nom;document.getElementById('dc-ctel').value=c.tel||'';document.getElementById('dc-cadr').value=c.zone||'';document.getElementById('m-pick-cl').style.display='none';}
+
+// 11. OUTILS ──────────────────────────────────────────────
+function rTools(){
+  const tools=[
+    {icon:'🤖',name:'Claude AI',color:'#8B5CF6',url:'https://claude.ai'},
+    {icon:'💬',name:'ChatGPT',color:'#10A37F',url:'https://chat.openai.com'},
+    {icon:'🎨',name:'Canva',color:'#8B5CF6',url:'https://canva.com'},
+    {icon:'📌',name:'Pinterest',color:'#E60023',url:'https://pinterest.com'},
+    {icon:'🌬️',name:'Windy',color:'#1E90FF',url:'https://windy.com'},
+    {icon:'🌐',name:'Google',color:'#4285F4',url:'https://google.com'},
+    {icon:'▶️',name:'YouTube',color:'#FF0000',url:'https://youtube.com'},
+    {icon:'🏢',name:'Meta Suite',color:'#0082FB',url:'https://business.facebook.com'},
+    {icon:'🤝',name:'ManyChat',color:'#FF5722',url:'https://manychat.com'},
+  ];
+  document.getElementById('tools-grid').innerHTML=tools.map(t=>`
+    <a href="${t.url}" target="_blank" class="link-item">
+      <div class="link-ico" style="background:${t.color}22">${t.icon}</div>
+      <div class="link-lbl">${t.name}</div>
+    </a>`).join('');
+}
+
+// 13. CALCULATRICE ────────────────────────────────────────
+let cExpr='',cVal='0',cWaitOp=false;
+function calcAction(a){
+  const display=()=>{document.getElementById('calc-val').textContent=cVal;document.getElementById('calc-expr').textContent=cExpr;};
+  if(a==='C'){cExpr='';cVal='0';cWaitOp=false;display();return;}
+  if(a==='='){ try{const r=eval(cExpr.replace(/×/g,'*').replace(/÷/g,'/')||'0');cVal=parseFloat(r.toFixed(8)).toString();cExpr=cVal;}catch{cVal='Erreur';cExpr='';} display();return;}
+  if(['+','-','*','/','×','÷'].includes(a)){cExpr+=cVal+a;cVal='0';cWaitOp=true;display();return;}
+  if(a==='+/-'){cVal=(parseFloat(cVal)*-1).toString();display();return;}
+  if(a==='%'){cVal=(parseFloat(cVal)/100).toString();display();return;}
+  if(a==='.'){if(!cVal.includes('.'))cVal+='.';display();return;}
+  if(cWaitOp){cVal=a;cWaitOp=false;}else{cVal=cVal==='0'?a:cVal+a;}
+  display();
+}
+function calcMarge(){
+  const c=+document.getElementById('mg-cout').value||0,p=+document.getElementById('mg-prix').value||0;
+  if(!c&&!p){document.getElementById('mg-result').style.display='none';return;}
+  const mg=p-c;const pct=c>0?((mg/c)*100).toFixed(1):'—';
+  document.getElementById('mg-result').style.display='block';
+  document.getElementById('mg-val').textContent=(mg>=0?'+':'')+fm(mg);
+  document.getElementById('mg-val').style.color=mg>=0?'var(--green)':'var(--red)';
+  document.getElementById('mg-pct').textContent=`${pct}% · Coût: ${fm(c)} · Prix: ${fm(p)}`;
+}
+
+// 14. ACTUALITÉS ──────────────────────────────────────────
+function rNews(){
+  const news=[
+    {icon:'📰',name:'Food Service',color:'#4285F4',url:'https://www.foodservice.fr'},
+    {icon:'🍽️',name:'CHR Manager',color:'#F5A623',url:'https://www.lhm.fr'},
+    {icon:'🌍',name:'Horeca World',color:'#10A37F',url:'https://www.horecanews.net'},
+    {icon:'📱',name:'FB #Horeca',color:'#1877F2',url:'https://www.facebook.com/hashtag/horeca'},
+    {icon:'📸',name:'IG #CHR',color:'#E1306C',url:'https://www.instagram.com/explore/tags/chr'},
+    {icon:'🎵',name:'TikTok CHR',color:'#010101',url:'https://www.tiktok.com/tag/horeca'},
+    {icon:'📺',name:'YouTube CHR',color:'#FF0000',url:'https://www.youtube.com/results?search_query=horeca+equipment'},
+    {icon:'🏪',name:'Marketplace',color:'#1877F2',url:'https://www.facebook.com/marketplace/category/appliances'},
+    {icon:'🇹🇳',name:'Tayara.tn',color:'#E74C3C',url:'https://www.tayara.tn'},
+  ];
+  document.getElementById('news-grid').innerHTML=news.map(n=>`
+    <a href="${n.url}" target="_blank" class="link-item">
+      <div class="link-ico" style="background:${n.color}22">${n.icon}</div>
+      <div class="link-lbl">${n.name}</div>
+    </a>`).join('');
+}
+
+// 15. RADIO ───────────────────────────────────────────────
+let radioPlaying=false;
+function rRadio(){
+  const other=[
+    {n:'Mosaïque FM',u:'https://www.mosaiquefm.net',i:'📻'},
+    {n:'Shems FM',u:'https://www.shemsfm.net',i:'🎵'},
+    {n:'RTCI',u:'https://www.rtci.tn',i:'🌐'},
+    {n:'Radio Sfax',u:'http://www.radiosfax.tn',i:'📡'},
+  ];
+  document.getElementById('other-radios').innerHTML=`
+    <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Autres radios tunisiennes</div>
+    ${other.map(r=>`<a href="${r.u}" target="_blank" style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:12px;display:flex;align-items:center;gap:11px;text-decoration:none;margin-bottom:7px"><div style="font-size:20px">${r.i}</div><div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--text)">${r.n}</div></div><span style="color:var(--text3)">→</span></a>`).join('')}`;
+}
+function toggleRadio(){
+  const audio=document.getElementById('radio-audio');
+  const btn=document.getElementById('radio-play-btn');
+  const ico=document.getElementById('radio-play-ico');
+  if(radioPlaying){audio.pause();radioPlaying=false;btn.textContent='▶ Écouter en Direct';btn.style.background='var(--green)';ico.textContent='🕌';}
+  else{audio.play().then(()=>{radioPlaying=true;btn.textContent='⏸ Pause';btn.style.background='var(--red)';ico.textContent='🎵';}).catch(()=>{toast('Flux indisponible — essayez via le lien direct','r');window.open('https://www.radiozitouna.tn','_blank');});}
+}
+
+// 16. RÉPERTOIRE ──────────────────────────────────────────
+function rRepertoire(){repTab(repTab_active);}
+function repTab(t){
+  repTab_active=t;
+  ['contacts','clients'].forEach(x=>{const e=document.getElementById('rta-'+x);if(e){e.style.color=x===t?'var(--gold)':'var(--text3)';e.style.borderBottomColor=x===t?'var(--gold)':'transparent';e.style.fontWeight=x===t?'700':'600';}});
+  const cont=document.getElementById('rep-content');
+  const list=t==='clients'?CL:contacts.filter(c=>c.type!=='client');
+  cont.innerHTML=list.length?list.map(c=>`
+    <div class="contact-row">
+      <div class="contact-av" style="background:${avi(c.nom)}">${ini(c.nom)}</div>
+      <div class="contact-info">
+        <div class="contact-name">${c.nom} ${c.zone?`<span style="font-weight:400;color:var(--text3);font-size:10px">· ${c.zone}</span>`:''}${c.type==='client'?`<span style="background:var(--gold3);color:var(--gold);border-radius:20px;padding:2px 7px;font-size:9px;font-weight:700;margin-left:5px">Client</span>`:''}</div>
+        <div class="contact-tel">${c.tel||'—'}</div>
+        ${c.note?`<div style="font-size:10px;color:var(--blue);margin-top:2px">${c.note}</div>`:''}
+      </div>
+      <div style="display:flex;gap:6px">
+        <a href="tel:${(c.tel||'').replace(/\s/g,'')}" style="background:var(--green2);color:var(--green);width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:16px" onclick="event.stopPropagation()">📞</a>
+        <a href="https://wa.me/${(c.tel||'').replace(/[^0-9]/g,'')}" target="_blank" style="background:rgba(37,211,102,.12);color:#25D366;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:14px" onclick="event.stopPropagation()">💬</a>
+      </div>
+    </div>`).join(''):`<div style="text-align:center;padding:40px;color:var(--text3)">Aucun ${t==='clients'?'client':'contact'}</div>`;
+}
+function openAddContact(){document.getElementById('sh-ct-ttl').textContent='Nouveau Contact';document.getElementById('ctf-id').value='';['ctf-nom','ctf-tel','ctf-zone','ctf-note'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});document.getElementById('sh-contact').classList.add('on');}
+function saveContact(){const nom=document.getElementById('ctf-nom').value.trim(),tel=document.getElementById('ctf-tel').value.trim();if(!nom){toast('Nom requis !','r');return;}const type=document.getElementById('ctf-type').value;const data={id:Date.now(),nom,tel:tel||'—',zone:document.getElementById('ctf-zone').value,note:document.getElementById('ctf-note').value,type};if(type==='client')CL.push({...data,cats:'',nb:0,mont:0});else contacts.push(data);SA();closeOverlays();rRepertoire();toast(`${nom} ajouté !`,'g');}
+
+// 17. CONFIG ──────────────────────────────────────────────
+function rConfig(){
+  document.getElementById('config-body').innerHTML=`
+  <div class="card" style="margin-bottom:12px"><div class="card-hd"><span class="card-t">🏢 Informations</span></div><div class="card-bd">
+    <div class="field"><label>WhatsApp</label><input value="${CF.wa||''}" placeholder="+21620910909" onchange="CF.wa=this.value;SA()"></div>
+    <div class="field"><label>Facebook (URL)</label><input value="${CF.fb||''}" placeholder="https://facebook.com/..." onchange="CF.fb=this.value;SA()"></div>
+    <div class="field"><label>Instagram (URL)</label><input value="${CF.ig||''}" placeholder="https://instagram.com/..." onchange="CF.ig=this.value;SA()"></div>
+    <div class="field" style="margin-bottom:0"><label>TikTok (URL)</label><input value="${CF.tk||''}" placeholder="https://tiktok.com/..." onchange="CF.tk=this.value;SA()"></div>
+  </div></div>
+  <div class="card" style="margin-bottom:12px"><div class="card-hd"><span class="card-t">💸 Charges Mensuelles</span></div><div class="card-bd">
+    <div class="g2">
+      <div class="field"><label>Loyer (DT)</label><input type="number" value="${CF.loyer||0}" onchange="CF.loyer=+this.value;SA()"></div>
+      <div class="field"><label>Gasoil (DT)</label><input type="number" value="${CF.gasoil||0}" onchange="CF.gasoil=+this.value;SA()"></div>
+    </div>
+    <div class="g2">
+      <div class="field" style="margin-bottom:0"><label>Internet (DT)</label><input type="number" value="${CF.internet||0}" onchange="CF.internet=+this.value;SA()"></div>
+      <div class="field" style="margin-bottom:0"><label>Entretien (DT)</label><input type="number" value="${CF.entretien||0}" onchange="CF.entretien=+this.value;SA()"></div>
+    </div>
+  </div></div>
+  <div class="card" style="margin-bottom:12px"><div class="card-hd"><span class="card-t">🏛️ Trésorerie</span></div><div class="card-bd">
+    <div class="g2">
+      <div class="field" style="margin-bottom:0"><label>Encaissé (DT)</label><input type="number" value="${CF.fond_encaisse||0}" onchange="CF.fond_encaisse=+this.value;SA()"></div>
+      <div class="field" style="margin-bottom:0"><label>Créance (DT)</label><input type="number" value="${CF.fond_creance||0}" onchange="CF.fond_creance=+this.value;SA()"></div>
+    </div>
+  </div></div>
+  <div class="card" style="margin-bottom:12px"><div class="card-hd"><span class="card-t">📊 Statistiques</span></div><div class="card-bd">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
+      ${[['Stock',SD.length,'var(--blue)'],['Ventes',VD.length,'var(--green)'],['Clients',CL.length,'var(--gold)'],['Notes',notes.length,'var(--purple)'],['Docs',docsData.length,'var(--red)'],['Photos',photos.length,'var(--text2)']].map(([l,v,c])=>`<div style="background:var(--bg3);border-radius:10px;padding:10px"><div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:${c}">${v}</div><div style="font-size:9px;color:var(--text3);font-weight:600;text-transform:uppercase;margin-top:2px">${l}</div></div>`).join('')}
+    </div>
+  </div></div>
+  <div class="card" style="margin-bottom:14px"><div class="card-hd"><span class="card-t">🔄 Remise à Zéro</span></div><div class="card-bd">
+    <div style="font-size:12px;color:var(--text2);margin-bottom:12px">Réinitialiser les données revient aux valeurs par défaut.</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <button class="btn btn-ghost btn-full" onclick="confirmDel('Remettre le stock par défaut ?',()=>{SD=SD_DEF.map(x=>({...x}));SA();toast('Stock réinitialisé','g');rConfig();})">Réinitialiser Stock</button>
+      <button class="btn btn-ghost btn-full" onclick="confirmDel('Effacer toutes les notes ?',()=>{notes=[];SA();toast('Notes effacées','g');rConfig();})">Effacer Notes</button>
+      <button class="btn btn-red btn-full" onclick="confirmDel('TOUT réinitialiser ? (irréversible)',()=>{localStorage.clear();location.reload();})">⚠️ Tout Réinitialiser</button>
+    </div>
+  </div></div>
+  <div style="background:linear-gradient(135deg,rgba(245,166,35,.08),rgba(245,166,35,.02));border:1px solid rgba(245,166,35,.18);border-radius:14px;padding:16px">
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--gold2);margin-bottom:8px">📲 Installer sur votre téléphone</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.9">
+      <strong style="color:var(--text)">Android :</strong> Chrome → ⋮ → Ajouter à l'écran d'accueil<br>
+      <strong style="color:var(--text)">iPhone :</strong> Safari → 📤 → Sur l'écran d'accueil<br>
+      <strong style="color:var(--text)">GitHub Pages :</strong> uploadez <code style="background:var(--bg3);padding:2px 6px;border-radius:4px">index.html</code> → URL permanente<br>
+      <span style="color:var(--green);font-weight:600">✅ 100% gratuit · Hors ligne · Données locales</span>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+// DRAWER MENU CONFIG
+// ═══════════════════════════════════════════════════
+const DRAWER_ITEMS=[
+  {section:'🏠 Principal'},
+  {id:'home',icon:'🏠',label:'Accueil',sub:'Dashboard & résumé',color:'#F5A623'},
+  {id:'radar',icon:'📡',label:'Radar Synergy',sub:'Prospection & veille marché',color:'#06D6A0',badge:'NEW'},
+  {divider:true},
+  {section:'🛠️ Gestion'},
+  {id:7,icon:'📊',label:'Gestion & Finance',sub:'Stock · Ventes · Chiffres',color:'#FFD166'},
+  {id:9,icon:'🧾',label:'Devis & Factures',sub:'PDF · Partage · Archives',color:'#A78BFA'},
+  {id:8,icon:'📖',label:'Catalogue',sub:'Livre plein écran articles',color:'#FF4757'},
+  {id:16,icon:'📞',label:'Répertoire',sub:'Contacts · Clients VIP',color:'#4ECDC4'},
+  {divider:true},
+  {section:'📱 Communication'},
+  {id:4,icon:'💬',label:'Messagerie',sub:'WhatsApp · FB · IG · TikTok',color:'#25D366'},
+  {id:6,icon:'📢',label:'Publier Article',sub:'FB · IG · Marketplace',color:'#1877F2'},
+  {id:5,icon:'🏪',label:'Marketplace',sub:'Recherche annonces',color:'#1877F2'},
+  {divider:true},
+  {section:'⚡ Outils'},
+  {id:2,icon:'📝',label:'Notes',sub:'Mémos rapides',color:'#06D6A0'},
+  {id:3,icon:'📷',label:'Photo & Vidéo',sub:'Caméra · Galerie · Sauvegarde',color:'#4ECDC4'},
+  {id:13,icon:'🧮',label:'Calculatrice',sub:'+ Calcul marge rapide',color:'#A78BFA'},
+  {id:11,icon:'🛠️',label:'Outils Gratuits',sub:'Claude · Canva · ChatGPT…',color:'#8B5CF6'},
+  {id:10,icon:'🔍',label:'Google Lens',sub:'Reconnaissance image',color:'#4285F4'},
+  {id:12,icon:'🗺️',label:'Maps & Navigation',sub:'Google Maps · Waze',color:'#34A853'},
+  {divider:true},
+  {section:'🌟 Lifestyle'},
+  {id:1,icon:'🕌',label:'تعبّد',sub:'Prières · Coran',color:'#06D6A0'},
+  {id:15,icon:'📻',label:'Radio Zitouna FM',sub:'En direct · Tunisie',color:'#0F766E'},
+  {id:14,icon:'📰',label:'Actualités Horeca',sub:'Tendances & magazines',color:'#F97316'},
+  {divider:true},
+  {id:17,icon:'⚙️',label:'Configuration',sub:'Paramètres généraux',color:'#6B7280'},
+];
+
+function buildDrawer(){
+  const menu=document.getElementById('drawer-menu');
+  menu.innerHTML=DRAWER_ITEMS.map(item=>{
+    if(item.section)return`<div class="drawer-section">${item.section}</div>`;
+    if(item.divider)return`<div class="drawer-divider"></div>`;
+    return`<div class="drawer-item" id="di-${item.id}" onclick="drawerGo('${item.id}')">
+      <div class="drawer-ico" style="background:${item.color}18">${item.icon}</div>
+      <div style="flex:1;min-width:0">
+        <div class="drawer-label">${item.label}${item.badge?` <span style="background:var(--green);color:#080810;border-radius:20px;padding:1px 7px;font-size:8px;font-weight:800;margin-left:4px">${item.badge}</span>`:''}</div>
+        ${item.sub?`<span class="drawer-label-ar">${item.sub}</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+function openDrawer(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('on');
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('on');
+}
+function drawerGo(id){
+  closeDrawer();
+  // highlight active
+  document.querySelectorAll('.drawer-item').forEach(d=>d.classList.remove('active-item'));
+  const el=document.getElementById('di-'+id);if(el)el.classList.add('active-item');
+  if(id==='home'){showHome();return;}
+  if(id==='radar'){openPanel('radar');rRadarSynergy();return;}
+  if(id===8||id==='8'){openCatalogue();return;}
+  openPanel(id);
+}
+
+// ═══════════════════════════════════════════════════
+// HOME CONTENT
+// ═══════════════════════════════════════════════════
+function showHome(){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  const totalMarge=VD.reduce((a,v)=>a+(v.vendu-v.cout),0);
+  const now=new Date(),thisM=now.toISOString().slice(0,7);
+  const mV=VD.filter(v=>v.dv&&v.dv.startsWith(thisM));
+  const mMg=mV.reduce((a,v)=>a+(v.vendu-v.cout),0);
+  const skPot=SD.reduce((a,s)=>a+s.prix,0);
+  const urgents=SD.filter(s=>['⭐ URGENT','✅ PRÊT'].includes(s.st));
+
+  document.getElementById('home-content').innerHTML=`
+  <!-- KPI -->
+  <div class="kpi-home" style="margin-bottom:14px">
+    <div style="font-size:10px;color:rgba(245,166,35,.6);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">${now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--gold2);line-height:1">${fm(totalMarge)}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px;font-weight:600">MARGE CUMULÉE TOTALE</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--green)">+${fm(mMg)}</div>
+        <div style="font-size:9px;color:var(--text3);margin-top:2px">${mV.length} vente${mV.length>1?'s':''} ce mois</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px">
+      ${[['📦',SD.length,'En stock','var(--blue)'],['💰',VD.length,'Vendus','var(--green)'],['👥',CL.length,'Clients','var(--gold)']].map(([i,v,l,c])=>`<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:10px;text-align:center"><div style="font-size:16px">${i}</div><div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:${c};margin-top:3px">${v}</div><div style="font-size:9px;color:var(--text3);margin-top:2px;font-weight:600">${l}</div></div>`).join('')}
+    </div>
+  </div>
+
+  <!-- RADAR CTA -->
+  <div onclick="drawerGo('radar')" style="background:linear-gradient(135deg,rgba(6,214,160,.1),rgba(6,214,160,.04));border:1px solid rgba(6,214,160,.25);border-radius:14px;padding:14px 16px;margin-bottom:14px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .18s">
+    <div style="width:42px;height:42px;background:rgba(6,214,160,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;animation:radarPing 2s ease infinite">📡</div>
+    <div style="flex:1">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--green)">Radar Synergy — Actif</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:2px">Prospection · Veille marché · Nouvelles annonces</div>
+    </div>
+    <span style="color:var(--green);font-size:20px">→</span>
+  </div>
+  <style>@keyframes radarPing{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}</style>
+
+  <!-- QUICK ACTIONS -->
+  <div class="home-section-ttl" style="margin-bottom:10px">⚡ Actions Rapides</div>
+  <div class="quick-grid">
+    ${[['7','📊','Gestion','#FFD166'],['9','🧾','Docs','#A78BFA'],['4','💬','Msgs','#25D366'],['8','📖','Catalogue','#FF4757'],['2','📝','Notes','#06D6A0'],['13','🧮','Calcul.','#A78BFA'],['1','🕌','تعبّد','#4ECDC4'],['15','📻','Radio','#0F766E']].map(([id,ico,lbl,col])=>`<div class="qtile" onclick="${id==='8'?'openCatalogue()':'openPanel(\''+id+'\')'}" style="border-top:2px solid ${col}22"><div class="qtile-ico">${ico}</div><div class="qtile-lbl">${lbl}</div></div>`).join('')}
+  </div>
+
+  <!-- ALERTS -->
+  ${urgents.slice(0,2).map(s=>`<div class="alert-strip warn"><span style="font-size:16px">${s.st==='⭐ URGENT'?'⭐':'✅'}</span><span>${s.art} — ${s.trav||''} <strong style="color:var(--gold)">${fm(s.prix)}</strong></span></div>`).join('')}
+
+  <!-- RECENT VENTES -->
+  <div class="home-section-ttl" style="margin-top:4px">💰 Dernières Ventes</div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+    ${VD.slice().sort((a,b)=>(b.dv||'').localeCompare(a.dv||'')).slice(0,4).map(v=>{const mg=v.vendu-v.cout;return`
+    <div onclick="openPanel(7)" style="background:var(--card);border:1px solid var(--border);border-left:3px solid ${mg>=0?'var(--green)':'var(--red)'};border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:11px;cursor:pointer">
+      <div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${v.art}</div><div style="font-size:10px;color:var(--text2);margin-top:2px">${fd(v.dv)} · ${v.prov||'—'}</div></div>
+      <div style="text-align:right"><div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:${mg>=0?'var(--green)':'var(--red)'}">${mg>=0?'+':''}${fm(mg)}</div><div style="font-size:9px;color:var(--text3)">${fm(v.vendu)}</div></div>
+    </div>`;}).join('')}
+  </div>
+  <div style="padding-bottom:30px"></div>`;
+}
+
+// ═══════════════════════════════════════════════════
+// RADAR SYNERGY — Prospection & Veille
+// ═══════════════════════════════════════════════════
+function rRadarSynergy(){
+  const el=document.getElementById('radar-content');if(!el)return;
+
+  const prospection=[
+    {label:'Ouverture restaurant Tunis 2025',icon:'🍽️',q:'Ouverture+restaurant+Tunis+2025',net:'fb'},
+    {label:'Nouveau café Tunis',icon:'☕',q:'Nouveau+café+Tunis',net:'fb'},
+    {label:'Inauguration boulangerie Tunisie',icon:'🥐',q:'Inauguration+boulangerie+Tunisie',net:'fb'},
+    {label:'Cherche équipement CHR Tunisie',icon:'🔍',q:'cherche+équipement+CHR+Tunisie',net:'fb'},
+    {label:'Ouverture pâtisserie Tunisie',icon:'🎂',q:'ouverture+pâtisserie+Tunisie',net:'fb'},
+    {label:'Restaurant à vendre Tunis',icon:'🏪',q:'restaurant+à+vendre+Tunis',net:'fb'},
+    {label:'Horeca Tunisie',icon:'🌍',q:'Horeca+Tunisie',net:'li'},
+    {label:'CHR Tunisie équipement',icon:'⚙️',q:'CHR+Tunisie+équipement',net:'li'},
+  ];
+  const veille=[
+    {label:'Frigo vitrine occasion',icon:'❄️',q:'frigo vitrine',net:'ty'},
+    {label:'Four pizza professionnel',icon:'🍕',q:'four pizza professionnel',net:'ty'},
+    {label:'Machine café professionnelle',icon:'☕',q:'machine café professionnelle',net:'ty'},
+    {label:'Vitrine réfrigérée occasion',icon:'🧊',q:'vitrine réfrigérée occasion',net:'mp'},
+    {label:'Congélateur vitrine',icon:'🔵',q:'congélateur vitrine',net:'mp'},
+    {label:'Comptoir réfrigéré',icon:'🥗',q:'comptoir réfrigéré',net:'mp'},
+    {label:'Pétrin boulangerie occasion',icon:'🌾',q:'pétrin boulangerie occasion',net:'ty'},
+    {label:'Four pâtisserie occasion',icon:'🎂',q:'four pâtisserie occasion',net:'mp'},
+  ];
+
+  function getURL(q,net){
+    if(net==='fb')return`https://www.facebook.com/search/posts?q=${encodeURIComponent(q.replace(/\+/g,' '))}&filters=eyJyZWNlbnRfcG9zdHMiOnsibmFtZSI6InJlY2VudF9wb3N0cyIsImFyZ3MiOiIifX0=`;
+    if(net==='li')return`https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(q.replace(/\+/g,' '))}`;
+    if(net==='ty')return`https://www.tayara.tn/search/?q=${encodeURIComponent(q.replace(/\+/g,' '))}&sort=recent`;
+    if(net==='mp')return`https://www.facebook.com/marketplace/search?query=${encodeURIComponent(q.replace(/\+/g,' '))}&sortBy=creation_time_descend`;
+    return`https://www.google.com/search?q=${encodeURIComponent(q.replace(/\+/g,' '))}&tbs=qdr:d`;
+  }
+  function netBadge(n){const m={fb:['📘','#1877F2'],li:['💼','#0077B5'],ty:['🇹🇳','#E74C3C'],mp:['🏪','#1877F2']};const[i,c]=m[n]||['🌐','#888'];return`<span style="background:${c}22;color:${c};border-radius:20px;padding:2px 8px;font-size:9px;font-weight:700">${i} ${n.toUpperCase()}</span>`;}
+
+  el.innerHTML=`
+  <!-- SCORE MARCHÉ -->
+  <div style="background:linear-gradient(135deg,rgba(6,214,160,.08),rgba(6,214,160,.02));border:1px solid rgba(6,214,160,.2);border-radius:14px;padding:14px 16px;margin-bottom:14px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <div style="width:10px;height:10px;background:var(--green);border-radius:50%;animation:radarPing 1.5s infinite"></div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--green)">Radar Synergy — En veille</div>
+    </div>
+    <div style="font-size:11px;color:var(--text2);line-height:1.7">Outil de <strong style="color:var(--text)">prospection automatique</strong> + <strong style="color:var(--text)">veille concurrentielle</strong>. Cliquez sur un mot-clé pour trouver vos futurs clients ou surveiller le marché de l'occasion.</div>
+  </div>
+
+  <!-- PROSPECTION -->
+  <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px">🎯 Prospection — Trouver vos Futurs Clients</div>
+  <div style="font-size:11px;color:var(--text2);margin-bottom:12px;background:var(--bg3);border-radius:10px;padding:9px 12px;border-left:3px solid var(--gold)">💡 Ces boutons cherchent en temps réel sur Facebook et LinkedIn des personnes qui ouvrent des établissements — vos futurs acheteurs !</div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px">
+    ${prospection.map(p=>`
+    <a href="${getURL(p.q,p.net)}" target="_blank" style="background:var(--card);border:1px solid var(--border);border-radius:13px;padding:12px 14px;display:flex;align-items:center;gap:12px;text-decoration:none;transition:all .18s">
+      <span style="font-size:20px;flex-shrink:0">${p.icon}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:700;color:var(--text)">${p.label}</div>
+        <div style="margin-top:4px">${netBadge(p.net)}</div>
+      </div>
+      <span style="color:var(--text3);font-size:18px">→</span>
+    </a>`).join('')}
+  </div>
+
+  <!-- VEILLE CONCURRENTIELLE -->
+  <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px">🔭 Veille Concurrentielle — Marché Occasion</div>
+  <div style="font-size:11px;color:var(--text2);margin-bottom:12px;background:var(--bg3);border-radius:10px;padding:9px 12px;border-left:3px solid var(--blue)">💡 Ces recherches sont triées par <strong style="color:var(--text)">Plus récent</strong> — vous voyez les nouvelles annonces en temps réel pour acheter avant les autres !</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px">
+    ${veille.map(v=>`
+    <a href="${getURL(v.q,v.net)}" target="_blank" style="background:var(--card);border:1px solid var(--border);border-radius:13px;padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;text-align:center;transition:all .18s">
+      <span style="font-size:22px">${v.icon}</span>
+      <div style="font-size:11px;font-weight:700;color:var(--text);line-height:1.3">${v.label}</div>
+      <div>${netBadge(v.net)}</div>
+    </a>`).join('')}
+  </div>
+
+  <!-- GROUPES & HASHTAGS -->
+  <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px">🌐 Groupes & Hashtags Actifs</div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+    ${['Horeca Tunisie','CHR Tunisie','Restaurateurs Tunisie','Matériel CHR occasion','Équipement hôtelier','Boulangerie Tunisie','Pâtisserie Tunisie','Café Tunisie'].map(g=>`
+    <a href="https://www.facebook.com/groups/search/?q=${encodeURIComponent(g)}" target="_blank" style="background:var(--card);border:1px solid rgba(24,119,242,.25);color:#4A90D9;border-radius:20px;padding:7px 14px;font-size:11px;font-weight:700;text-decoration:none">🔗 ${g}</a>`).join('')}
+  </div>
+
+  <!-- INTELLIGENCE MARCHÉ -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:20px">
+    <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">📊 Intelligence Marché — Liens Directs</div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      ${[
+        ['https://www.tayara.tn/ads/c/Equipements-professionnels/?sort=recent','🇹🇳','Tayara.tn — Équipements pro (récents)','Nouvelles annonces Tunisie'],
+        ['https://www.facebook.com/marketplace/tunis/search/?query=horeca&sortBy=creation_time_descend','📘','Marketplace Tunis — Horeca (récent)','Annonces Facebook récentes'],
+        ['https://www.facebook.com/marketplace/search?query=frigo+vitrine&sortBy=creation_time_descend','❄️','Marketplace — Frigo & Vitrines','Nouvelles offres'],
+        ['https://www.jumia.com.tn/mlp-restaurant-equipment/','🛒','Jumia Tunisie — Équipements','Prix neufs de référence'],
+      ].map(([u,i,n,s])=>`<a href="${u}" target="_blank" style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;text-decoration:none"><span style="font-size:18px">${i}</span><div style="flex:1"><div style="font-size:12px;font-weight:700;color:var(--text)">${n}</div><div style="font-size:10px;color:var(--text2)">${s}</div></div><span style="color:var(--text3)">→</span></a>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+// NAVIGATION — Behavior FB/Insta (minimize not exit)
+// ═══════════════════════════════════════════════════
+// (curPanel, exitCount, exitTimer already declared above)
+function openPanel(id){
+  curPanel=id;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  const p=document.getElementById('p-'+id);
+  if(p){p.classList.add('on');const fn=PANEL_RENDERERS[id];if(fn)fn();}
+}
+function closePanel(){
+  if(curPanel){document.getElementById('p-'+curPanel)?.classList.remove('on');curPanel=null;}
+  // highlight home in drawer
+  document.querySelectorAll('.drawer-item').forEach(d=>d.classList.remove('active-item'));
+  const h=document.getElementById('di-home');if(h)h.classList.add('active-item');
+}
+function closeOverlays(){document.querySelectorAll('.overlay.on,.dialog.on').forEach(e=>e.classList.remove('on'));}
+function closeDoc(){document.getElementById('m-doc').style.display='none';}
+
+window.addEventListener('popstate',()=>{
+  history.pushState(null,'',location.href);
+  // Close drawer first
+  if(document.getElementById('drawer').classList.contains('open')){closeDrawer();return;}
+  // Close full modal
+  const mf=document.getElementById('m-doc');if(mf&&mf.style.display!=='none'){closeDoc();return;}
+  // Close overlay sheet
+  const ov=document.querySelector('.overlay.on');if(ov){ov.classList.remove('on');return;}
+  // Close dialog
+  const dl=document.querySelector('.dialog.on');if(dl){dl.classList.remove('on');return;}
+  // Close panel
+  if(curPanel){closePanel();return;}
+  // FB/Insta behavior: minimize app instead of closing
+  // On mobile PWA, go to background
+  if(window.navigator.standalone||document.referrer.includes('android-app://')){
+    // Try to minimize
+    window.history.pushState(null,'','/');
+  }
+  // Double-tap confirmation as fallback
+  exitCount++;
+  if(exitCount===1){showToast('Appuyez encore pour quitter');exitTimer=setTimeout(()=>exitCount=0,2500);}
+  else{clearTimeout(exitTimer);exitCount=0;document.getElementById('dlg-exit').classList.add('on');}
+});
+history.pushState(null,'',location.href);
+
+// Swipe right to open drawer
+let swX=0,swY=0;
+document.addEventListener('touchstart',e=>{swX=e.touches[0].clientX;swY=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-swX;
+  const dy=Math.abs(e.changedTouches[0].clientY-swY);
+  if(dx>60&&dy<50&&swX<40){openDrawer();return;}
+  if(dx<-60&&dy<50){if(document.getElementById('drawer').classList.contains('open'))closeDrawer();}
+},{passive:true});
+
+function showToast(m,t=''){const el=document.createElement('div');el.className='toast '+(t||'');el.textContent=m;document.getElementById('toasts').appendChild(el);setTimeout(()=>el.remove(),2700);}
+
+// ═══════════════════════════════════════════════════
+// WELCOME MOSAÏQUE — Photos HD équipements
+// ═══════════════════════════════════════════════════
+const MOSAIC_PHOTOS=[
+  'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=85&fit=crop',
+  'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&q=85&fit=crop',
+  'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&q=85&fit=crop',
+  'https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=400&q=85&fit=crop',
+  'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=85&fit=crop',
+  'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=85&fit=crop',
+  'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&q=85&fit=crop',
+  'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&q=85&fit=crop',
+  'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&q=85&fit=crop',
+];
+function buildMosaic(){
+  const m=document.getElementById('wc-mosaic');if(!m)return;
+  m.innerHTML=MOSAIC_PHOTOS.map(u=>`<div class="wc-tile" style="background-image:url('${u}')"></div>`).join('');
+  // Animate each tile in with stagger
+  setTimeout(()=>{
+    m.classList.add('vis');
+    m.querySelectorAll('.wc-tile').forEach((t,i)=>{t.style.opacity='0';t.style.transform='scale(1.05)';t.style.transition=`opacity .6s ${i*.07}s, transform .8s ${i*.07}s ease`;
+      setTimeout(()=>{t.style.opacity='1';t.style.transform='scale(1)';},50);
+    });
+  },100);
+}
+
+// ═══════════════════════════════════════════════════
+// ── rMsg ─────────────────────────────────────────────────
+function rMsg(){
+  const el=document.getElementById('d-msg');if(!el)return;
+  const plats=[{n:'WhatsApp',i:'💬',c:'#25D366',u:`https://wa.me/${(CF.wa||'').replace(/[^0-9]/g,'')}`},{n:'Facebook',i:'📘',c:'#1877F2',u:CF.fb||'https://business.facebook.com/inbox'},{n:'Instagram',i:'📸',c:'#E1306C',u:CF.ig||'https://instagram.com'},{n:'TikTok',i:'🎵',c:'#010101',u:CF.tk||'https://tiktok.com'},{n:'Meta Suite',i:'🏢',c:'#0082FB',u:'https://business.facebook.com'}];
+  el.innerHTML=`<div style="padding:14px">
+    <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">Plateformes</div>
+    <div style="display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:14px">
+      ${plats.map(p=>`<a href="${p.u}" target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;flex-shrink:0"><div style="width:48px;height:48px;background:${p.c};border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 12px ${p.c}44">${p.i}</div><span style="font-size:10px;font-weight:600;color:var(--text2)">${p.n}</span></a>`).join('')}
+    </div>
+    <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">Clients</div>
+    ${CL.map(c=>`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:13px;padding:13px 14px;margin-bottom:9px;display:flex;align-items:center;gap:12px">
+      <div style="width:42px;height:42px;border-radius:50%;background:${colorAvatar(c.nom)};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#fff;flex-shrink:0">${initials(c.nom)}</div>
+      <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700;color:var(--navy)">${c.nom}</div><div style="font-size:11px;color:var(--text2);margin-top:2px">${c.tel||'—'} · ${c.zone||'—'}</div></div>
+      <div style="display:flex;gap:7px">
+        <a href="tel:${(c.tel||'').replace(/\s/g,'')}" style="width:34px;height:34px;background:var(--green2);border-radius:10px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:16px">📞</a>
+        <a href="https://wa.me/${(c.tel||'').replace(/[^0-9]/g,'')}" target="_blank" style="width:34px;height:34px;background:rgba(37,211,102,.12);border-radius:10px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:14px">💬</a>
+      </div>
+    </div>`).join('')||'<div style="text-align:center;padding:30px;color:var(--text2)">Aucun client</div>'}
+  </div>`;
+}
+
+// ── rPlus ─────────────────────────────────────────────────
+function rPlus(){
+  const el=document.getElementById('plus-content');if(!el)return;
+  el.innerHTML=`
+  <div style="margin-bottom:14px">
+    <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Navigation</div>
+    ${[['catalogue','📖','Catalogue','Imprimable · Sans prix · Mis à jour auto'],['alertes','🔔','Alertes','Articles urgents & priorités'],['config','⚙️','Configuration','Fond · Charges · Réseaux sociaux'],['radar','📡','Radar Synergy','Prospection & Veille marché']].map(([n,i,t,s])=>`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:9px;display:flex;align-items:center;gap:14px;cursor:pointer" onclick="go('${n}')">
+      <div style="font-size:26px">${i}</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--navy)">${t}</div><div style="font-size:11px;color:var(--text2);margin-top:2px">${s}</div></div>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>`).join('')}
+  </div>
+  <div style="margin-bottom:14px">
+    <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Outils Gratuits</div>
+    ${[['https://claude.ai','🤖','Claude AI','Assistant IA Anthropic'],['https://chat.openai.com','💬','ChatGPT','IA OpenAI'],['https://canva.com','🎨','Canva','Designs réseaux sociaux'],['https://business.facebook.com','🏢','Meta Suite','FB + IG centralisés'],['https://manychat.com','🤝','ManyChat','Chatbot automatique gratuit'],['https://pwabuilder.com','📲','PWABuilder','Convertir en app Android']].map(([u,i,n,s])=>`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:13px 16px;margin-bottom:9px;display:flex;align-items:center;gap:12px;cursor:pointer" onclick="window.open('${u}','_blank')">
+      <div style="font-size:24px">${i}</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--navy)">${n}</div><div style="font-size:11px;color:var(--text2);margin-top:2px">${s}</div></div>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    </div>`).join('')}
+  </div>
+  <div style="background:linear-gradient(135deg,rgba(245,166,35,.08),rgba(245,166,35,.03));border:1px solid rgba(245,166,35,.2);border-radius:16px;padding:18px;margin-bottom:10px">
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--gold2);margin-bottom:10px">📲 Installer l'application</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.9">
+      <strong style="color:var(--text)">Android :</strong> Chrome → ⋮ → Ajouter à l'écran d'accueil<br>
+      <strong style="color:var(--text)">iPhone :</strong> Safari → 📤 → Sur l'écran d'accueil<br>
+      <strong style="color:var(--text)">GitHub Pages :</strong> uploadez <code>index.html</code> → URL permanente gratuite<br>
+      <span style="color:var(--green);font-weight:600">✅ 100% gratuit · Données locales</span>
+    </div>
+  </div>`;
+}
+
+// ── DEVIS / FACTURE ───────────────────────────────────────
+let docsData=LD('docs',[]), docNum=LD('docnum',1), docLines=[], curDocId=null, docTabA='devis';
+
+function switchDocTab(t){
+  docTabA=t;
+  ['devis','facture'].forEach(x=>{
+    const e=document.getElementById('dta-'+x);if(!e)return;
+    e.style.color=x===t?'var(--gold)':'var(--text3)';
+    e.style.borderBottomColor=x===t?'var(--gold)':'transparent';
+    e.style.fontWeight=x===t?'700':'600';
+  });
+  rDocs();
+}
+
+function rDocs(){
+  const el=document.getElementById('docs-list');if(!el)return;
+  const st_sub=document.getElementById('docs-subtitle');
+  if(st_sub)st_sub.textContent=`${docsData.filter(d=>d.docType==='devis').length} devis · ${docsData.filter(d=>d.docType==='facture').length} factures`;
+  const d=docsData.filter(x=>x.docType===docTabA).slice().reverse();
+  const stBadge=s=>({paid:'<span style="color:var(--green);font-size:11px">✅ Payé</span>',partial:'<span style="color:var(--amber);font-size:11px">⚡ Partiel</span>',pending:'<span style="color:var(--red);font-size:11px">⏳ Attente</span>'})[s]||'';
+  el.innerHTML=d.length?d.map(doc=>`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+        <div style="flex:1">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700">N°${String(doc.num).padStart(4,'0')} · ${doc.docType==='facture'?'🧾 Facture':'📄 Devis'}</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">${fd(doc.date)} · ${doc.client||'—'}${doc.tel?' · '+doc.tel:''}</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--gold);margin-top:4px">${fm(doc.total)}</div>
+          ${doc.docType==='facture'?'<div style="margin-top:4px">'+stBadge(doc.status)+'</div>':''}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <button class="btn btn-gold btn-sm" onclick="editDoc(${doc.id})">✏️ Voir</button>
+          <button class="btn btn-ghost btn-sm" onclick="shareDocById(${doc.id})">📤</button>
+          <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="if(confirm('Supprimer ?')){docsData=docsData.filter(x=>x.id!==${doc.id});SA();rDocs();}">🗑</button>
+        </div>
+      </div>
+    </div>`).join(''):`<div style="text-align:center;padding:40px;color:var(--text3)"><div style="font-size:42px;margin-bottom:12px;opacity:.2">${docTabA==='facture'?'🧾':'📄'}</div><p>Aucun ${docTabA}</p><br><button class="btn btn-gold btn-sm" onclick="openNewFac('${docTabA}')">Créer ${docTabA==='devis'?'un devis':'une facture'}</button></div>`;
+}
+
+function openNewFac(type){
+  curDocId=null;docLines=[];
+  if(!document.getElementById('m-facture')){showToast('Module non disponible','r');return;}
+  document.getElementById('fac-id').value='';
+  document.getElementById('fac-type').value=type;
+  document.getElementById('fac-modal-ttl').textContent=type==='facture'?'🧾 Nouvelle Facture':'📄 Nouveau Devis';
+  document.getElementById('fac-status-wrap').style.display=type==='facture'?'block':'none';
+  ['fac-cnom','fac-ctel','fac-cadr','fac-notes'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
+  const dt=new Date();dt.setDate(dt.getDate()+30);
+  document.getElementById('fac-valid').value=dt.toISOString().slice(0,10);
+  renderFacLines();
+  document.getElementById('m-facture').classList.add('on');
+}
+
+function editDoc(id){
+  const doc=docsData.find(x=>x.id===id);if(!doc)return;
+  curDocId=id;docLines=[...(doc.items||[])];
+  openNewFac(doc.docType);
+  document.getElementById('fac-id').value=id;
+  document.getElementById('fac-cnom').value=doc.client||'';
+  document.getElementById('fac-ctel').value=doc.tel||'';
+  document.getElementById('fac-cadr').value=doc.adr||'';
+  document.getElementById('fac-notes').value=doc.notes||'';
+  document.getElementById('fac-valid').value=doc.valid||'';
+  if(document.getElementById('fac-status'))document.getElementById('fac-status').value=doc.status||'pending';
+  renderFacLines();
+}
+
+function addFacLine(){docLines.push({art:'',qte:1,pu:0});renderFacLines();}
+
+function renderFacLines(){
+  const el=document.getElementById('fac-lines');if(!el)return;
+  el.innerHTML=docLines.length?docLines.map((l,i)=>`
+    <div style="padding:10px 14px;border-bottom:1px solid var(--border)">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:7px">
+        <input style="flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:9px;font-size:12px;background:var(--bg3);color:var(--text)" placeholder="Description article" value="${l.art}" oninput="docLines[${i}].art=this.value">
+        <div onclick="docLines.splice(${i},1);renderFacLines()" style="color:var(--red);cursor:pointer;font-size:20px;padding:2px 6px">✕</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input type="number" style="width:60px;padding:8px;border:1.5px solid var(--border);border-radius:9px;font-size:12px;background:var(--bg3);color:var(--text)" placeholder="Qté" value="${l.qte}" oninput="docLines[${i}].qte=+this.value;updFacTotal()">
+        <input type="number" style="flex:1;padding:8px;border:1.5px solid var(--border);border-radius:9px;font-size:12px;background:var(--bg3);color:var(--text)" placeholder="P.U. (DT)" value="${l.pu||''}" oninput="docLines[${i}].pu=+this.value;updFacTotal()">
+        <div style="background:var(--card);border-radius:9px;padding:8px 10px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--gold);white-space:nowrap">${fm(l.qte*l.pu)}</div>
+      </div>
+    </div>`).join(''):'<div style="padding:20px;text-align:center;color:var(--text3);font-size:12px">Cliquez ➕ Ligne pour ajouter</div>';
+  updFacTotal();
+}
+
+function updFacTotal(){
+  const el=document.getElementById('fac-total');
+  if(el)el.textContent=fm(docLines.reduce((a,l)=>a+l.qte*l.pu,0));
+}
+
+function saveFacture(){
+  if(!docLines.length){showToast('Ajoutez au moins un article !','r');return;}
+  const total=docLines.reduce((a,l)=>a+l.qte*l.pu,0);
+  const type=document.getElementById('fac-type').value;
+  const doc={
+    id:curDocId||Date.now(),
+    num:curDocId?docsData.find(x=>x.id===curDocId)?.num:docNum++,
+    docType:type,date:td(),
+    client:document.getElementById('fac-cnom').value||'—',
+    tel:document.getElementById('fac-ctel').value,
+    adr:document.getElementById('fac-cadr').value,
+    notes:document.getElementById('fac-notes').value,
+    valid:document.getElementById('fac-valid').value,
+    status:document.getElementById('fac-status')?.value||'pending',
+    total,items:[...docLines]
+  };
+  if(curDocId){const i=docsData.findIndex(x=>x.id===curDocId);if(i>=0)docsData[i]=doc;else docsData.push(doc);}
+  else docsData.push(doc);
+  SV('docnum',docNum);SA();
+  showToast(`✅ ${type==='facture'?'Facture':'Devis'} N°${String(doc.num).padStart(4,'0')} sauvegardé !`,'green');
+  rDocs();
+}
+
+function getDocTxt(doc){
+  const isF=doc.docType==='facture';
+  return`⚡ *SYNERGY HORECA EQUIPMENT*\n${isF?'🧾 FACTURE PRO FORMA':'📄 DEVIS'} N°${String(doc.num).padStart(4,'0')}\n\n👤 ${doc.client||'—'}${doc.tel?'\n📞 '+doc.tel:''}\n📅 ${fd(doc.date)}\n\n📋 Articles :\n${(doc.items||[]).map(l=>`• ${l.art} × ${l.qte} = ${fm(l.qte*l.pu)}`).join('\n')}\n\n💰 TOTAL : ${fm(doc.total)}${doc.notes?'\n\n📝 '+doc.notes:''}\n\n📞 +216 20 910 909 · Radès · Grand Tunis\n✅ Contrôlé · Révisé · Garanti`;
+}
+
+function shareDoc(method){
+  saveFacture();
+  const id=document.getElementById('fac-id').value?+document.getElementById('fac-id').value:null;
+  const doc=id?docsData.find(x=>x.id===id):docsData[docsData.length-1];
+  if(!doc)return;const txt=getDocTxt(doc);
+  if(method==='wa')window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`,'_blank');
+  else if(method==='fb')window.open(`https://www.facebook.com/sharer/sharer.php?quote=${encodeURIComponent(txt.slice(0,200))}`,'_blank');
+  else if(method==='ig'){navigator.clipboard?.writeText(txt).then(()=>{showToast('📋 Copié ! Collez dans Instagram','green');window.open(CF.ig||'https://instagram.com','_blank');});}
+  else if(method==='copy'){if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>showToast('📋 Copié !','green'));else{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();showToast('📋 Copié !','green');}}
+  else if(navigator.share)navigator.share({title:'Document Synergy Horeca',text:txt}).catch(()=>{});
+  else if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>showToast('📋 Copié !','green'));
+}
+
+function shareDocById(id){
+  const doc=docsData.find(x=>x.id===id);if(!doc)return;
+  const txt=getDocTxt(doc);
+  if(navigator.share)navigator.share({title:'Document',text:txt}).catch(()=>{});
+  else if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>showToast('📋 Copié !','green'));
+}
+
+function printFacture(){
+  saveFacture();
+  const id=document.getElementById('fac-id').value?+document.getElementById('fac-id').value:null;
+  const doc=id?docsData.find(x=>x.id===id):docsData[docsData.length-1];if(!doc)return;
+  const isF=doc.docType==='facture';
+  const w=window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html><head><title>${isF?'Facture':'Devis'} N°${String(doc.num).padStart(4,'0')}</title><meta charset="UTF-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;color:#111;font-size:12px;padding:26px;max-width:660px;margin:auto}.hdr{border-bottom:3px solid #0D0D1A;padding-bottom:13px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:flex-start}.brand{font-size:19px;font-weight:900;color:#0D0D1A}.sub{font-size:10px;color:#666;margin-top:2px}.doc-ttl{font-size:16px;font-weight:900;color:#B8860B;text-align:right}.doc-num{font-size:10px;color:#666;text-align:right;margin-top:2px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}.box{background:#F7F7F7;border-radius:6px;padding:10px}.lbl{font-size:9px;font-weight:900;text-transform:uppercase;color:#888;letter-spacing:.8px;margin-bottom:3px}table{width:100%;border-collapse:collapse;margin-bottom:12px}thead tr{background:#0D0D1A}thead th{color:#fff;padding:7px;font-size:10px;font-weight:700;text-align:left}tbody td{padding:7px;border-bottom:1px solid #eee;font-size:11px}tbody tr:nth-child(even){background:#F7F7F7}.total-row td{background:#0D0D1A!important;color:#fff!important;font-weight:700;padding:9px 7px!important;border:none!important;font-size:12px}.gval{color:#DAA520!important;font-size:16px!important;font-weight:900!important}.sign{border:1px solid #eee;border-radius:7px;padding:12px;text-align:center;width:160px;font-size:10px;color:#999;height:72px}.footer{margin-top:14px;padding-top:9px;border-top:1px solid #eee;display:flex;justify-content:space-between;font-size:10px;color:#999}@media print{body{padding:12px}}</style></head><body>
+  <div class="hdr"><div><div class="brand">⚡ SYNERGY HORECA EQUIPMENT</div><div class="sub">Equipements Horeca Occasion · Contrôlé · Révisé · Garanti</div><div class="sub">Rue Monji Slim · Radès Plage · Grand Tunis · +216 20 910 909</div></div><div><div class="doc-ttl">${isF?'FACTURE PRO FORMA':'DEVIS'}</div><div class="doc-num">N° ${String(doc.num).padStart(4,'0')} · ${fd(doc.date)}</div>${doc.valid?`<div class="doc-num">Validité : ${fd(doc.valid)}</div>`:''}</div></div>
+  <div class="grid"><div class="box"><div class="lbl">Émis par</div><div style="font-size:11px;font-weight:600;line-height:1.8">Synergy Horeca Equipment<br>Radès Plage · Grand Tunis<br>+216 20 910 909</div></div><div class="box"><div class="lbl">${isF?'Facturé à':'Devis pour'}</div><div style="font-size:11px;font-weight:600;line-height:1.8">${doc.client||'—'}${doc.tel?'<br>'+doc.tel:''}${doc.adr?'<br>'+doc.adr:''}</div></div></div>
+  <table><thead><tr><th>#</th><th>Description</th><th style="text-align:center">Qté</th><th style="text-align:right">P.U.</th><th style="text-align:right">Total</th></tr></thead><tbody>${(doc.items||[]).map((l,i)=>`<tr><td>${i+1}</td><td>${l.art||'—'}</td><td style="text-align:center">${l.qte}</td><td style="text-align:right">${l.pu} DT</td><td style="text-align:right;font-weight:600">${fm(l.qte*l.pu)}</td></tr>`).join('')}<tr class="total-row"><td colspan="4" style="text-align:right">TOTAL TTC</td><td class="gval">${fm(doc.total)}</td></tr></tbody></table>
+  ${doc.notes?`<div style="background:#F7F7F7;border-radius:6px;padding:9px;margin-top:10px;font-size:11px;color:#555">${doc.notes}</div>`:''}
+  <div style="display:flex;justify-content:space-between;margin-top:18px;align-items:flex-end">${isF?`<div class="sign">Cachet & Signature Client<br><br>Date: __________</div>`:'<div></div>'}<div class="sign">Cachet & Signature<br>Synergy Horeca Equipment</div></div>
+  <div class="footer"><span>⚡ Synergy Horeca Equipment · Radès · Grand Tunis</span><span>${fd(td())}</span></div>
+  </body></html>`);
+  w.document.close();setTimeout(()=>w.print(),400);
+}
+
+function prefillFacClient(){
+  document.getElementById('pick-client-list').innerHTML=CL.map(c=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:13px;border-bottom:1px solid var(--border);cursor:pointer;background:var(--bg)" onclick="pickClientForFac(${c.id})">
+      <div style="width:40px;height:40px;border-radius:50%;background:${colorAvatar(c.nom)};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#fff;flex-shrink:0">${initials(c.nom)}</div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--navy)">${c.nom}</div><div style="font-size:11px;color:var(--text2)">📞 ${c.tel}</div></div>
+    </div>`).join('');
+  document.getElementById('m-pick-client').classList.add('on');
+}
+
+function pickClientForFac(id){
+  const c=CL.find(x=>x.id===id);if(!c)return;
+  document.getElementById('fac-cnom').value=c.nom;
+  document.getElementById('fac-ctel').value=c.tel||'';
+  document.getElementById('fac-cadr').value=c.zone||'';
+  document.getElementById('m-pick-client').classList.remove('on');
+}
+
+// ── rCalcPanel (calculatrice dans volet plus) ─────────────
+function rCalcPanel(){
+  // Calculatrice dans volet Plus — ouvre le panneau p-13
+  openPanel(13);
+}
+
+// ── Compat alias pour showToast ───────────────────────────
+function showToast(msg,type){
+  const t=document.createElement('div');
+  t.className='toast '+(type==='green'?'g':type==='red'?'r':'');
+  t.textContent=msg;
+  document.getElementById('toasts').appendChild(t);
+  setTimeout(()=>t.remove(),2800);
+}
+
+// INIT SEQUENCE
+// ═══════════════════════════════════════════════════
+buildDrawer();
+
+// Splash → Welcome (6s)
+setTimeout(()=>{
+  const s=document.getElementById('splash');
+  s.classList.add('out');
+  setTimeout(()=>{
+    s.style.display='none';
+    const w=document.getElementById('welcome');
+    w.style.display='block';
+    buildMosaic();
+    // Welcome → Main (4s) with soft transition
+    setTimeout(()=>{
+      w.style.transition='opacity .8s ease';
+      w.style.opacity='0';
+      setTimeout(()=>{
+        w.style.display='none';
+        const main=document.getElementById('main');
+        main.style.display='block';
+        main.classList.add('fadein');
+        updateClock();rPrayer();
+        showHome();
+        // Set home as active in drawer
+        const h=document.getElementById('di-home');if(h)h.classList.add('active-item');
+        // Update prayer in drawer
+        const prEl=document.getElementById('drawer-prayer-next');
+        if(prEl)prEl.textContent=document.getElementById('hh-next-prayer-val')?.textContent||'—';
+      },800);
+    },3200);
+  },700);
+},6000);
+
+// PWA
+const mfd={name:'Synergy Horeca Equipment',short_name:'Horeca',display:'standalone',background_color:'#080810',theme_color:'#080810',start_url:'.',icons:[{src:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="44" fill="%23080810"/><path d="M108 20L44 104h72l-8 68L164 88H92Z" fill="%23F5A623"/></svg>',sizes:'192x192',type:'image/svg+xml'}]};
+const mfb=new Blob([JSON.stringify(mfd)],{type:'application/json'});
+const mfl=document.createElement('link');mfl.rel='manifest';mfl.href=URL.createObjectURL(mfb);document.head.appendChild(mfl);
+if('serviceWorker'in navigator)navigator.serviceWorker.register(URL.createObjectURL(new Blob([`const C='she1';self.addEventListener('install',()=>self.skipWaiting());self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});self.addEventListener('fetch',e=>{e.respondWith(fetch(e.request).catch(()=>new Response('Offline')));});`],{type:'application/javascript'}))).catch(()=>{});
+</script>
+</body>
+</html>
